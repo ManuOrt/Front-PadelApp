@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/screens/onboarding/onboarding_page_model.dart';
-import 'package:flutter/services.dart';
-import 'package:front_end_padelapp/utils/app_colors.dart';
 
 class OnboardingScreens extends StatefulWidget {
   const OnboardingScreens({super.key});
@@ -30,24 +28,18 @@ class OnboardingScreenState extends State<OnboardingScreens> {
       description:
           'En nuestra aplicación, encontrarás el compañero perfecto para llevar tu juego de pádel al siguiente nivel. Haz clic en "Empezar" y comienza tu viaje hacia un pádel excepcional. ¡Estamos emocionados de acompañarte en esta aventura deportiva!',
     ),
-  ];  
+    OnboardingPageModel(
+        title: 'Como usar la Apliación...', 
+        videoPath: 'n1Y4HROvFME'
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: AppColors.primary,
-      ),
-    );
-
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.top]);
-
     return Stack(
       children: [
         PageView(
           controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
           children: onboardingPagesList
               .map(
                 (page) => page.buildPage(
@@ -69,10 +61,13 @@ class OnboardingScreenState extends State<OnboardingScreens> {
                         index--;
                       });
                       _pageController.previousPage(
-                        duration: Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn,
                       );
                     }
+                  },
+                  onFinalButtonPressed: () {
+                    Navigator.pushReplacementNamed(context, '/main');
                   },
                 ),
               )
