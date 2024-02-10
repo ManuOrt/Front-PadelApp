@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front_end_padelapp/utils/app_colors.dart';
-
 import '../../widgets/widgets.dart';
 
 class OnboardingPageModel {
@@ -19,11 +17,19 @@ class OnboardingPageModel {
   });
 
   Widget buildPage({
+    required BuildContext context,
     required int currentIndex,
     required VoidCallback onNextPressed,
     required VoidCallback onBackPressed,
     required VoidCallback onFinalButtonPressed,
   }) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final double buttonWidth = screenSize.width * 0.8;
+    final double buttonHeight = screenSize.height * 0.07;
+    final double topPadding = screenSize.height * 0.3;
+    final double titleFontSize = screenSize.width * 0.06;
+    final double descriptionFontSize = screenSize.width * 0.04;
+
     return Material(
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -37,32 +43,31 @@ class OnboardingPageModel {
           ),
         ),
         child: Center(
-          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 200),
+                  padding: EdgeInsets.only(top: topPadding),
                   child: Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24.0,
+                      fontSize: titleFontSize,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                const SizedBox(height: 40.0),
+                const SizedBox(height: 10.0),
                 Container(
-                  padding: const EdgeInsets.all(25.0),
+                  padding: EdgeInsets.all(screenSize.width * 0.05),
                   child: description != null && description!.isNotEmpty
                       ? Text(
                           description!,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w300,
                             height: 1.8,
-                            fontSize: 20.0,
+                            fontSize: descriptionFontSize,
                           ),
                           textAlign: TextAlign.center,
                         )
@@ -70,80 +75,37 @@ class OnboardingPageModel {
                           videoId: videoPath!,
                         ),
                 ),
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 40.0),
                 BallIndicator(
                     pageCount: pageCount ??= 4, currentIndex: currentIndex),
                 const SizedBox(height: 50.0),
                 if (currentIndex < pageCount! - 1)
-                  ElevatedButton(
-                    onPressed: onNextPressed,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 120.0,
-                        vertical: 12.0,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14.0),
-                      ),
-                    ),
-                    child: const Text(
-                      'SIGUIENTE',
-                      style: TextStyle(
-                        color: AppColors.primaryWhite,
-                        fontSize: 16.0,
-                      ),
-                    ),
+                  OnboardingButton(
+                    buttonWidth: buttonWidth,
+                    buttonHeight: buttonHeight,
+                    buttonText: 'SIGUIENTE',
+                    onFinalButtonPressed: onNextPressed,
                   ),
                 const SizedBox(height: 10.0),
                 if (currentIndex == pageCount! - 1)
-                  ElevatedButton(
-                    onPressed: onFinalButtonPressed,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 85.0,
-                        vertical: 12.0,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14.0),
-                      ),
-                    ),
-                    child: const Text(
-                      'IR A LA APLICACIÓN',
-                      style: TextStyle(
-                        color: AppColors.primaryWhite,
-                        fontSize: 16.0,
-                      ),
-                    ),
+                  OnboardingButton(
+                    buttonWidth: buttonWidth,
+                    buttonHeight: buttonHeight,
+                    buttonText: 'IR A LA APLICACIÓN',
+                    onFinalButtonPressed: onFinalButtonPressed,
                   ),
                 const SizedBox(height: 10.0),
                 if (currentIndex > 0)
-                  ElevatedButton(
-                    onPressed: onBackPressed,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 135.0,
-                        vertical: 12.0,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14.0),
-                      ),
-                    ),
-                    child: const Text(
-                      'ATRÁS',
-                      style: TextStyle(
-                        color: AppColors.primaryWhite,
-                        fontSize: 16.0,
-                      ),
-                    ),
+                  OnboardingButton(
+                    buttonWidth: buttonWidth,
+                    buttonHeight: buttonHeight,
+                    buttonText: 'ATRÁS',
+                    onFinalButtonPressed: onBackPressed,
                   ),
               ],
             ),
           ),
         ),
-      ),
     );
   }
 }

@@ -43,12 +43,10 @@ class OnboardingScreenState extends State<OnboardingScreens> {
           children: onboardingPagesList
               .map(
                 (page) => page.buildPage(
+                  context: context,
                   currentIndex: index,
                   onNextPressed: () {
                     if (index < onboardingPagesList.length - 1) {
-                      setState(() {
-                        index++;
-                      });
                       _pageController.nextPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn,
@@ -57,9 +55,6 @@ class OnboardingScreenState extends State<OnboardingScreens> {
                   },
                   onBackPressed: () {
                     if (index > 0) {
-                      setState(() {
-                        index--;
-                      });
                       _pageController.previousPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn,
