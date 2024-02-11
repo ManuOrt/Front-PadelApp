@@ -4,18 +4,19 @@ import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
   final Function()? ontap;
-  const LoginScreen({Key? key, this.ontap}) : super(key: key);
+  const RegisterScreen({super.key, this.ontap});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _passwordController = TextEditingController();
-  final _email = TextEditingController();
-
+class _RegisterScreenState extends State<RegisterScreen> {
+  final email = TextEditingController();
+  final usuario = TextEditingController();
+  final passwordController = TextEditingController();
+  final repeatPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -41,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Text(
-                    'Inciar Sesión',
+                    'Registrate',
                     style: TextStyle(
                       color: AppColors.primaryWhite,
                       fontSize: 30,
@@ -54,53 +55,50 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: EdgeInsets.all(size.width * 0.02),
                     child: TextFieldWidget(
+                        text: 'Usuario',
+                        icon: const Icon(Icons.person),
+                        size: size,
+                        controller: usuario,
+                        validator: (valor) => valor != null && valor.length < 6
+                            ? 'Introduce un minimo de 6 caracteres'
+                            : null),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.all(size.width * 0.02),
+                      child: TextFieldWidget(
+                          text: 'Correo Electronico',
+                          icon: const Icon(Icons.email),
+                          size: size,
+                          controller: email,
+                          validator: (valor) =>
+                              valor != null && valor.length < 6
+                                  ? 'Introduce un minimo de 6 caracteres'
+                                  : null)),
+                  Padding(
+                    padding: EdgeInsets.all(size.width * 0.02),
+                    child: PasswordTextFieldWidget(
+                      text: 'Contraseña',
                       size: size,
-                      controller: _email,
-                      text: 'Email',
-                      validator: (value) => value!.isEmpty
-                          ? 'Campo vacio'
-                          : null, //TODO: Add email vaildation with regex or something
+                      passwordController: passwordController,
+                      authProvider: Provider.of<AuthProvider>(context),
+                      validator: (valor) => valor != null && valor.length < 6
+                          ? 'Introduce un minimo de 6 caracteres'
+                          : null,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(size.width * 0.02),
                     child: PasswordTextFieldWidget(
-                        text: 'Contraseña',
-                        size: size,
-                        passwordController: _passwordController,
-                        authProvider: Provider.of<AuthProvider>(context),
-                        validator: (valor) => valor != null && valor.length < 6
-                            ? 'Contraseña poco segura'
-                            : null),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 19, top: 8, right: 19),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.01,
-                        ),
-                        const Text(
-                          'Recuerdame',
-                          style: TextStyle(
-                            color: AppColors.primaryWhite,
-                          ),
-                        ),
-                        const Spacer(),
-                        GestureDetector(
-                          onTap: () => Navigator.pushNamed(context,
-                              '/forgot'), //TODO: Create forgot password screen
-                          child: const Text(
-                            "Olvidaste tu contraseña?",
-                            style: TextStyle(
-                              color: AppColors.primaryWhite,
-                            ),
-                          ),
-                        ),
-                      ],
+                      text: 'Repetir Contraseña',
+                      size: size,
+                      passwordController: repeatPasswordController,
+                      authProvider: Provider.of<AuthProvider>(context),
+                      validator: (valor) {
+                        if (valor != passwordController.text) {
+                          return 'Las contraseñas no coinciden';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   SizedBox(
@@ -113,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {},
                       child: const Center(
                         child: Text(
-                          'INICIAR SESIÓN',
+                          'REGISTRARSE',
                           style: TextStyle(
                             color: AppColors.primaryWhite,
                             fontWeight: FontWeight.bold,
@@ -131,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          "No tienes una cuenta aún?",
+                          "Ya tienes cuenta?",
                           style: TextStyle(
                             color: AppColors.primaryWhite,
                           ),
@@ -142,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         GestureDetector(
                           onTap: widget.ontap,
                           child: const Text(
-                            "Registrate!",
+                            "Inicia Sesión!",
                             style: TextStyle(
                                 color: AppColors.primaryWhite,
                                 fontWeight: FontWeight.bold,
