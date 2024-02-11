@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front_end_padelapp/screens/onboarding/onboarding_page_model.dart';
+import 'package:front_end_padelapp/screens/onboarding/onboarding_screen_model.dart';
 
 class OnboardingScreens extends StatefulWidget {
   const OnboardingScreens({super.key});
@@ -43,12 +43,10 @@ class OnboardingScreenState extends State<OnboardingScreens> {
           children: onboardingPagesList
               .map(
                 (page) => page.buildPage(
+                  context: context,
                   currentIndex: index,
                   onNextPressed: () {
                     if (index < onboardingPagesList.length - 1) {
-                      setState(() {
-                        index++;
-                      });
                       _pageController.nextPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn,
@@ -57,9 +55,6 @@ class OnboardingScreenState extends State<OnboardingScreens> {
                   },
                   onBackPressed: () {
                     if (index > 0) {
-                      setState(() {
-                        index--;
-                      });
                       _pageController.previousPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn,
