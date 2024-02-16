@@ -28,7 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             image: const AssetImage('assets/img/login.png'),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.37),
+              Colors.black.withOpacity(0.60),
               BlendMode.srcOver,
             ),
           ),
@@ -41,16 +41,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Registrate',
-                    style: TextStyle(
-                      color: AppColors.primaryWhite,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Column(
+                    children: [
+                      Image.asset(
+                        'assets/img/logo/logo-white.png',
+                        width: 220,
+                        height: 200,
+                      ),
+                    ],
                   ),
                   SizedBox(
-                    height: size.height * 0.05,
+                    height: size.height * 0.03,
                   ),
                   Padding(
                     padding: EdgeInsets.all(size.width * 0.02),
@@ -120,11 +121,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
+
                   Padding(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.only(top: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -135,12 +134,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         SizedBox(
-                          width: size.width * 0.02,
+                          width: size.width * 0.01,
                         ),
                         GestureDetector(
                           onTap: widget.ontap,
                           child: const Text(
-                            "Inicia Sesión!",
+                            "Iniciar Sesión",
                             style: TextStyle(
                                 color: AppColors.primaryWhite,
                                 fontWeight: FontWeight.bold,

@@ -11,7 +11,7 @@ class ChangeScreen extends StatefulWidget {
 class _LoginOrRegiserPageState extends State<ChangeScreen> {
   bool showLoginScreen = true;
 
-  void cambiarPaginas() {
+  void changeScreen() {
     setState(() {
       showLoginScreen = !showLoginScreen;
     });
@@ -21,11 +21,11 @@ class _LoginOrRegiserPageState extends State<ChangeScreen> {
   Widget build(BuildContext context) {
     if (showLoginScreen) {
       return LoginScreen(
-        ontap: cambiarPaginas,
+        ontap: changeScreen,
       );
     } else {
       return RegisterScreen(
-        ontap: cambiarPaginas,
+        ontap: changeScreen,
       );
     }
   }
