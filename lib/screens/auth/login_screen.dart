@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
             image: const AssetImage('assets/img/login.png'),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.37),
+              Colors.black.withOpacity(0.60),
               BlendMode.srcOver,
             ),
           ),
@@ -40,16 +40,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Inciar Sesión',
-                    style: TextStyle(
-                      color: AppColors.primaryWhite,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.05,
+                  Column(
+                    children: [
+                      Image.asset(
+                        'assets/img/logo/logo-white.png',
+                        width: 220,
+                        height: 200,
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsets.all(size.width * 0.02),
@@ -73,11 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ? 'Contraseña poco segura'
                             : null),
                   ),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 19, top: 8, right: 19),
+                    padding: const EdgeInsets.only(left: 19, top: 5, right: 19),
                     child: Row(
                       children: [
                         SizedBox(
@@ -122,11 +117,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.only(top: 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -137,12 +129,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(
-                          width: size.width * 0.02,
+                          width: size.width * 0.01,
                         ),
                         GestureDetector(
                           onTap: widget.ontap,
                           child: const Text(
-                            "Registrate!",
+                            "Registrate",
                             style: TextStyle(
                                 color: AppColors.primaryWhite,
                                 fontWeight: FontWeight.bold,
