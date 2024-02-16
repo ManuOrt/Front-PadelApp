@@ -40,18 +40,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      Image.asset(
-                        'assets/img/logo/logo-white.png',
-                        width: 220,
-                        height: 200,
-                      ),
-                    ],
+                  Image.asset(
+                    'assets/img/logo/logo-white.png',
+                    width: 220,
+                    height: 200,
                   ),
                   Padding(
                     padding: EdgeInsets.all(size.width * 0.02),
                     child: TextFieldWidget(
+                      icon: const Icon(Icons.email),
                       size: size,
                       controller: _email,
                       text: 'Email',
@@ -86,8 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const Spacer(),
                         GestureDetector(
-                          onTap: () => Navigator.pushNamed(context,
-                              '/forgot'), //TODO: Create forgot password screen
+                          onTap: () =>
+                              Navigator.pushNamed(context, 'recovery_password'),
                           child: const Text(
                             "Olvidaste tu contraseña?",
                             style: TextStyle(

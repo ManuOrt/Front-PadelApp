@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'PadelHub',
+      title: 'PaddleHub',
       initialRoute: 'change',
       routes: customRoutes,
       theme: ThemeData(
