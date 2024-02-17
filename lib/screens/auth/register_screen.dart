@@ -34,21 +34,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
         child: Stack(
-          children: [
+          children: [ 
             Align(
               alignment: Alignment.center,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      Image.asset(
-                        'assets/img/logo/logo-white.png',
-                        width: 220,
-                        height: 200,
-                      ),
-                    ],
+                  Image.asset(
+                    'assets/img/logo/logo-white.png',
+                    width: 220,
+                    height: 200,
                   ),
                   SizedBox(
                     height: size.height * 0.03,
@@ -121,7 +117,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: Row(
