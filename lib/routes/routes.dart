@@ -8,4 +8,5 @@ var customRoutes = <String, WidgetBuilder>{
   'register': (context) => const RegisterScreen(),
   'recovery_password': (context) => RecoveryPasswordScreen(),
   'change': (context) => const ChangeScreen(),
+  'home': (context) => const HomeScreen(),
 };

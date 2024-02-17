@@ -29,11 +29,12 @@ class TextFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
           labelText: text,
           border: OutlineInputBorder(
-            borderSide: const BorderSide(color: AppColors.primaryBlack, width: 10),
+            borderSide:
+                const BorderSide(color: AppColors.primaryBlack, width: 10),
             borderRadius: BorderRadius.circular(8),
           ),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: AppColors.primaryWhite,
           prefixIcon: icon,
         ),
       ),

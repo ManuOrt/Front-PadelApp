@@ -6,12 +6,15 @@ import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
-  final Function()? ontap;
+  final Function()? onTap;
 
-  const LoginScreen({Key? key, this.ontap}) : super(key: key);
+  const LoginScreen({Key? key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    final passwordController = TextEditingController();
+    final emailController = TextEditingController();
     return AuthScreensModel(
       child: Stack(
         children: [
@@ -24,28 +27,27 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                   const LogoWidget(),
-                    const SizedBox(height: 20),
+                    const LogoWidget(),
+                    SizedBox(height: size.height * 0.02),
                     TextFieldWidget(
                       text: 'Email',
-                      controller: TextEditingController(),
+                      controller: emailController,
                       validator: (value) => value!.isEmpty
                           ? 'Campo vacio'
                           : null, //TODO: Add email vaildation with regex or something
                       icon: const Icon(Icons.email),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
                       text: 'Contraseña',
-                      passwordController: TextEditingController(),
+                      passwordController: passwordController,
                       size: MediaQuery.of(context).size,
                       authProvider: Provider.of<AuthProvider>(context),
-                      validator: (valor) =>
-                          valor != null && valor.length < 6
-                              ? 'Contraseña poco segura'
-                              : null,
+                      validator: (valor) => valor != null && valor.length < 6
+                          ? 'Contraseña poco segura'
+                          : null,
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: size.height * 0.02),
                     Row(
                       children: [
                         const Text(
@@ -56,8 +58,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const Spacer(),
                         GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                              context, 'recovery_password'),
+                          onTap: () =>
+                              Navigator.pushNamed(context, 'recovery_password'),
                           child: const Text(
                             '¿Olvidaste tu contraseña?',
                             style: TextStyle(
@@ -67,12 +69,14 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: size.height * 0.03),
                     SizedBox(
                       height: 50,
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'home');
+                        },
                         child: const Text(
                           'INICIAR SESIÓN',
                           style: TextStyle(
@@ -82,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: size.height * 0.02),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -92,9 +96,9 @@ class LoginScreen extends StatelessWidget {
                             color: AppColors.primaryWhite,
                           ),
                         ),
-                        const SizedBox(width: 5),
+                        SizedBox(width: size.width * 0.02),
                         GestureDetector(
-                          onTap: ontap,
+                          onTap: onTap,
                           child: const Text(
                             'Regístrate',
                             style: TextStyle(
