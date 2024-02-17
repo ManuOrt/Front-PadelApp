@@ -12,16 +12,18 @@ class _LoginOrRegiserPageState extends State<ChangeScreen> {
   bool showLoginScreen = true;
 
   void changeScreen() {
-    setState(() {
-      showLoginScreen = !showLoginScreen;
-    });
+    setState(
+      () {
+        showLoginScreen = !showLoginScreen;
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     if (showLoginScreen) {
       return LoginScreen(
-        ontap: changeScreen,
+        onTap: changeScreen,
       );
     } else {
       return RegisterScreen(

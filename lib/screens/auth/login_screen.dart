@@ -5,8 +5,8 @@ import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
-  final Function()? ontap;
-  const LoginScreen({Key? key, this.ontap}) : super(key: key);
+  final Function()? onTap;
+  const LoginScreen({Key? key, this.onTap}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -102,7 +102,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: size.height * 0.07,
                     width: size.width * 0.88,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'home');
+                      },
                       child: const Center(
                         child: Text(
                           'INICIAR SESIÓN',
@@ -129,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: size.width * 0.01,
                         ),
                         GestureDetector(
-                          onTap: widget.ontap,
+                          onTap: widget.onTap,
                           child: const Text(
                             "Registrate",
                             style: TextStyle(

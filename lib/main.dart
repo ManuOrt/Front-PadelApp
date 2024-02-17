@@ -5,12 +5,14 @@ import 'package:provider/provider.dart';
 
 import 'providers/providers.dart';
 
-void main() => runApp(MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-      ],
-      child: const MyApp(),
-    ));
+void main() => runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ],
+        child: const MyApp(),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

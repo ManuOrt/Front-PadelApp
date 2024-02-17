@@ -34,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
         child: Stack(
-          children: [ 
+          children: [
             Align(
               alignment: Alignment.center,
               child: Column(
@@ -61,16 +61,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             : null),
                   ),
                   Padding(
-                      padding: EdgeInsets.all(size.width * 0.02),
-                      child: TextFieldWidget(
-                          text: 'Correo Electronico',
-                          icon: const Icon(Icons.email),
-                          size: size,
-                          controller: email,
-                          validator: (valor) =>
-                              valor != null && valor.length < 6
-                                  ? 'Introduce un minimo de 6 caracteres'
-                                  : null)),
+                    padding: EdgeInsets.all(size.width * 0.02),
+                    child: TextFieldWidget(
+                        text: 'Correo Electronico',
+                        icon: const Icon(Icons.email),
+                        size: size,
+                        controller: email,
+                        validator: (valor) => valor != null && valor.length < 6
+                            ? 'Introduce un minimo de 6 caracteres'
+                            : null),
+                  ),
                   Padding(
                     padding: EdgeInsets.all(size.width * 0.02),
                     child: PasswordTextFieldWidget(
