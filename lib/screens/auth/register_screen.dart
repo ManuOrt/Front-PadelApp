@@ -1,94 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/providers/providers.dart';
+import 'package:front_end_padelapp/screens/auth/auth_screens_model.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends StatelessWidget {
   final Function()? ontap;
-  const RegisterScreen({super.key, this.ontap});
 
-  @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
+  const RegisterScreen({Key? key, this.ontap}) : super(key: key);
 
-class _RegisterScreenState extends State<RegisterScreen> {
-  final email = TextEditingController();
-  final usuario = TextEditingController();
-  final passwordController = TextEditingController();
-  final repeatPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    final passwordController = TextEditingController();
 
-    return Material(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: const AssetImage('assets/img/login.png'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.60),
-              BlendMode.srcOver,
-            ),
-          ),
-        ),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/img/logo/logo-white.png',
-                    width: 220,
-                    height: 200,
-                  ),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(size.width * 0.02),
-                    child: TextFieldWidget(
-                        text: 'Usuario',
-                        icon: const Icon(Icons.person),
-                        size: size,
-                        controller: usuario,
-                        validator: (valor) => valor != null && valor.length < 6
-                            ? 'Introduce un minimo de 6 caracteres'
-                            : null),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(size.width * 0.02),
-                    child: TextFieldWidget(
-                        text: 'Correo Electronico',
-                        icon: const Icon(Icons.email),
-                        size: size,
-                        controller: email,
-                        validator: (valor) => valor != null && valor.length < 6
-                            ? 'Introduce un minimo de 6 caracteres'
-                            : null),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(size.width * 0.02),
-                    child: PasswordTextFieldWidget(
+    return AuthScreensModel(
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const LogoWidget(),
+                    const SizedBox(height: 20),
+                    TextFieldWidget(
+                      text: 'Usuario',
+                      controller: TextEditingController(),
+                      validator: (value) => value!.length < 6
+                          ? 'Introduce un mínimo de 6 caracteres'
+                          : null,
+                      icon: const Icon(Icons.person),
+                    ),
+                    const SizedBox(height: 10),
+                    TextFieldWidget(
+                      text: 'Correo Electrónico',
+                      controller: TextEditingController(),
+                      validator: (value) => value!.length < 6
+                          ? 'Introduce un mínimo de 6 caracteres'
+                          : null,
+                      icon: Icon(Icons.email),
+                    ),
+                    SizedBox(height: 10),
+                    PasswordTextFieldWidget(
                       text: 'Contraseña',
-                      size: size,
                       passwordController: passwordController,
+                      size: MediaQuery.of(context).size,
                       authProvider: Provider.of<AuthProvider>(context),
                       validator: (valor) => valor != null && valor.length < 6
-                          ? 'Introduce un minimo de 6 caracteres'
+                          ? 'Contraseña poco segura'
                           : null,
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(size.width * 0.02),
-                    child: PasswordTextFieldWidget(
+                    SizedBox(height: 10),
+                    PasswordTextFieldWidget(
                       text: 'Repetir Contraseña',
-                      size: size,
-                      passwordController: repeatPasswordController,
+                      passwordController: TextEditingController(),
+                      size: MediaQuery.of(context).size,
                       authProvider: Provider.of<AuthProvider>(context),
                       validator: (valor) {
                         if (valor != passwordController.text) {
@@ -97,16 +68,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },
                     ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
-                  SizedBox(
-                    height: size.height * 0.07,
-                    width: size.width * 0.88,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Center(
+                    SizedBox(height: 20),
+                    SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {},
                         child: Text(
                           'REGISTRARSE',
                           style: TextStyle(
@@ -116,39 +83,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Row(
+                    SizedBox(height: 10),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          "Ya tienes cuenta?",
+                        Text(
+                          '¿Ya tienes una cuenta?',
                           style: TextStyle(
                             color: AppColors.primaryWhite,
                           ),
                         ),
-                        SizedBox(
-                          width: size.width * 0.01,
-                        ),
+                        SizedBox(width: 5),
                         GestureDetector(
-                          onTap: widget.ontap,
-                          child: const Text(
-                            "Iniciar Sesión",
+                          onTap: ontap,
+                          child: Text(
+                            'Iniciar Sesión',
                             style: TextStyle(
-                                color: AppColors.primaryWhite,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
+                              color: AppColors.primaryWhite,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
