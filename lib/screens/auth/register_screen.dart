@@ -6,13 +6,17 @@ import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
-  final Function()? ontap;
+  final Function()? onTap;
 
-  const RegisterScreen({Key? key, this.ontap}) : super(key: key);
+  const RegisterScreen({Key? key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final userController = TextEditingController();
+    final emailController = TextEditingController();
     final passwordController = TextEditingController();
+    final passwordRepeatController = TextEditingController();
+    final Size size = MediaQuery.of(context).size;
 
     return AuthScreensModel(
       child: Stack(
@@ -27,54 +31,56 @@ class RegisterScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const LogoWidget(),
-                    const SizedBox(height: 20),
+                    SizedBox(height: size.height * 0.02),
                     TextFieldWidget(
                       text: 'Usuario',
-                      controller: TextEditingController(),
+                      controller: userController,
                       validator: (value) => value!.length < 6
                           ? 'Introduce un mínimo de 6 caracteres'
                           : null,
                       icon: const Icon(Icons.person),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: size.height * 0.015),
                     TextFieldWidget(
                       text: 'Correo Electrónico',
-                      controller: TextEditingController(),
+                      controller: emailController,
                       validator: (value) => value!.length < 6
                           ? 'Introduce un mínimo de 6 caracteres'
                           : null,
-                      icon: Icon(Icons.email),
+                      icon: const Icon(Icons.email),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
                       text: 'Contraseña',
                       passwordController: passwordController,
                       size: MediaQuery.of(context).size,
-                      authProvider: Provider.of<AuthProvider>(context),
+                      authProvider:
+                          Provider.of<AuthProvider>(context, listen: true),
                       validator: (valor) => valor != null && valor.length < 6
                           ? 'Contraseña poco segura'
                           : null,
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
                       text: 'Repetir Contraseña',
-                      passwordController: TextEditingController(),
+                      passwordController: passwordRepeatController,
                       size: MediaQuery.of(context).size,
-                      authProvider: Provider.of<AuthProvider>(context),
+                      authProvider:
+                          Provider.of<AuthProvider>(context, listen: false),
                       validator: (valor) {
-                        if (valor != passwordController.text) {
+                        if (valor != passwordRepeatController.text) {
                           return 'Las contraseñas no coinciden';
                         }
                         return null;
                       },
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: size.height * 0.02),
                     SizedBox(
                       height: 50,
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {},
-                        child: Text(
+                        child: const Text(
                           'REGISTRARSE',
                           style: TextStyle(
                             color: AppColors.primaryWhite,
@@ -83,20 +89,20 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: size.height * 0.015),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           '¿Ya tienes una cuenta?',
                           style: TextStyle(
                             color: AppColors.primaryWhite,
                           ),
                         ),
-                        SizedBox(width: 5),
+                        SizedBox(width: size.width * 0.01),
                         GestureDetector(
-                          onTap: ontap,
-                          child: Text(
+                          onTap: onTap,
+                          child: const Text(
                             'Iniciar Sesión',
                             style: TextStyle(
                               color: AppColors.primaryWhite,

@@ -27,7 +27,7 @@ class _LoginOrRegiserPageState extends State<ChangeScreen> {
       );
     } else {
       return RegisterScreen(
-        ontap: changeScreen,
+        onTap: changeScreen,
       );
     }
   }
