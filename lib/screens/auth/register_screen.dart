@@ -7,17 +7,16 @@ import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   final Function()? onTap;
+  final userController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final passwordRepeatController = TextEditingController();
 
-  const RegisterScreen({Key? key, this.onTap}) : super(key: key);
+  RegisterScreen({Key? key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final userController = TextEditingController();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-    final passwordRepeatController = TextEditingController();
     final Size size = MediaQuery.of(context).size;
-
     return AuthScreensModel(
       child: Stack(
         children: [
@@ -38,7 +37,10 @@ class RegisterScreen extends StatelessWidget {
                       validator: (value) => value!.length < 6
                           ? 'Introduce un mínimo de 6 caracteres'
                           : null,
-                      icon: const Icon(Icons.person),
+                      icon: const Icon(
+                        Icons.person,
+                        color: AppColors.primaryGray,
+                      ),
                     ),
                     SizedBox(height: size.height * 0.015),
                     TextFieldWidget(
@@ -47,7 +49,10 @@ class RegisterScreen extends StatelessWidget {
                       validator: (value) => value!.length < 6
                           ? 'Introduce un mínimo de 6 caracteres'
                           : null,
-                      icon: const Icon(Icons.email),
+                      icon: const Icon(
+                        Icons.email,
+                        color: AppColors.primaryGray,
+                      ),
                     ),
                     SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
@@ -55,7 +60,7 @@ class RegisterScreen extends StatelessWidget {
                       passwordController: passwordController,
                       size: MediaQuery.of(context).size,
                       authProvider:
-                          Provider.of<AuthProvider>(context, listen: true),
+                          Provider.of<AuthProvider>(context, listen: false),
                       validator: (valor) => valor != null && valor.length < 6
                           ? 'Contraseña poco segura'
                           : null,
@@ -68,7 +73,7 @@ class RegisterScreen extends StatelessWidget {
                       authProvider:
                           Provider.of<AuthProvider>(context, listen: false),
                       validator: (valor) {
-                        if (valor != passwordRepeatController.text) {
+                        if (valor != passwordController.text) {
                           return 'Las contraseñas no coinciden';
                         }
                         return null;

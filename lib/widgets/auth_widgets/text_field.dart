@@ -27,10 +27,12 @@ class TextFieldWidget extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: validator,
         decoration: InputDecoration(
-          labelText: text,
+          hintText: text,
+          hintStyle: const TextStyle(
+            color: AppColors.primaryGray,
+          ),
           border: OutlineInputBorder(
-            borderSide:
-                const BorderSide(color: AppColors.primaryBlack, width: 10),
+            borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(8),
           ),
           filled: true,

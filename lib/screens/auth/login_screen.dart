@@ -7,14 +7,14 @@ import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   final Function()? onTap;
+  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
 
-  const LoginScreen({Key? key, this.onTap}) : super(key: key);
+  LoginScreen({Key? key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final passwordController = TextEditingController();
-    final emailController = TextEditingController();
     return AuthScreensModel(
       child: Stack(
         children: [
@@ -35,7 +35,10 @@ class LoginScreen extends StatelessWidget {
                       validator: (value) => value!.isEmpty
                           ? 'Campo vacio'
                           : null, //TODO: Add email vaildation with regex or something
-                      icon: const Icon(Icons.email),
+                      icon: const Icon(
+                        Icons.email,
+                        color: AppColors.primaryGray,
+                      ),
                     ),
                     SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
