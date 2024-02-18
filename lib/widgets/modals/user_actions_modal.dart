@@ -12,11 +12,6 @@ class UserActionsModal extends StatelessWidget {
       width: size.width * 0.8,
       height: size.height * 0.5,
       padding: const EdgeInsets.only(right: 30, left: 30),
-      decoration: BoxDecoration(
-        color: AppColors.primaryWhite.withOpacity(0.9),
-        borderRadius:
-            BorderRadius.circular(10),
-      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
