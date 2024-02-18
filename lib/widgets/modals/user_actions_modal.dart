@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/widgets/buttons/buttons_modal.dart';
 
 class UserActionsModal extends StatelessWidget {
@@ -9,9 +8,7 @@ class UserActionsModal extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Container(
-      width: size.width * 0.8,
-      height: size.height * 0.5,
-      padding: const EdgeInsets.only(right: 30, left: 30),
+      padding: const EdgeInsets.only(right: 20, left: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

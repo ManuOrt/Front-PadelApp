@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
-import 'package:front_end_padelapp/screens/screens.dart';
+import 'package:front_end_padelapp/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
@@ -38,18 +38,25 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: size.width * 0.04),
-                       GestureDetector(
+                      GestureDetector(
                         onTap: () {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return Dialog(
-                                backgroundColor: AppColors.primaryWhite.withOpacity(0.9),
+                                backgroundColor:
+                                    AppColors.primaryWhite.withOpacity(0.9),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 alignment: Alignment.topCenter,
-                                child: const UserActionsModal(),
+                                child: SizedBox(
+                                  width:
+                                      size.width * 0.8,
+                                  height:
+                                      size.height * 0.5,
+                                  child: const UserActionsModal(),
+                                ),
                               );
                             },
                           );
