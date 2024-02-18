@@ -22,13 +22,13 @@ class ButtonsModal extends StatelessWidget {
           backgroundColor: AppColors.primaryWhite,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
-            side: BorderSide(color: AppColors.primary),
+            side: const BorderSide(color: AppColors.primary),
           ),
         ),
         child: Center(
           child: Text(
             label,
-            style: TextStyle(color: AppColors.primary),
+            style: const TextStyle(color: AppColors.primary),
           ),
         ),
       ),
