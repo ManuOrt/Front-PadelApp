@@ -38,7 +38,9 @@ class HomeScreen extends StatelessWidget {
                       ),
                       SizedBox(width: size.width * 0.04),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                         child: const Icon(
                           Icons.person,
                           color: AppColors.primaryWhite,
@@ -67,6 +69,7 @@ class HomeScreen extends StatelessWidget {
                           color: AppColors.primaryBlack,
                         ),
                         border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         filled: true,
@@ -81,9 +84,9 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: size.height * 0.03),
-          const Padding(
-            padding: EdgeInsets.all(10),
-            child: Text(
+          Padding(
+            padding: EdgeInsets.only(left: size.width * 0.05),
+            child: const Text(
               'Nuestros entrenadores',
               style: TextStyle(
                 fontSize: 20,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/providers/providers.dart';
+import 'package:front_end_padelapp/utils/app_colors.dart';
 
 class PasswordTextFieldWidget extends StatelessWidget {
   const PasswordTextFieldWidget(
@@ -26,20 +27,29 @@ class PasswordTextFieldWidget extends StatelessWidget {
         controller: passwordController,
         obscureText: authProvider.password,
         decoration: InputDecoration(
-          labelText: text,
+          hintText: text,
+          hintStyle: const TextStyle(
+            color: AppColors.primaryGray,
+          ),
           border: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.black, width: 10),
+            borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(8),
           ),
           suffixIcon: IconButton(
-            icon: Icon(authProvider.password
-                ? Icons.visibility_off_rounded
-                : Icons.visibility_rounded),
+            icon: Icon(
+              authProvider.password
+                  ? Icons.visibility_off_rounded
+                  : Icons.visibility_rounded,
+              color: AppColors.primaryGray,
+            ),
             onPressed: () {
               authProvider.updatePassword();
             },
           ),
-          prefixIcon: const Icon(Icons.lock),
+          prefixIcon: const Icon(
+            Icons.lock,
+            color: AppColors.primaryGray,
+          ),
           filled: true,
           fillColor: Colors.white,
         ),
