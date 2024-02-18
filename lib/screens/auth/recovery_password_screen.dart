@@ -8,24 +8,13 @@ class RecoveryPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController recoverPasswordController = TextEditingController();
+    final TextEditingController recoverPasswordController =
+        TextEditingController();
 
     return AuthScreensModel(
       child: Stack(
         children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 50.0, left: 10.0),
-              child: IconButton(
-                style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(AppColors.primaryWhite.withOpacity(0.3))),
-                icon: const Icon(Icons.arrow_back, color: AppColors.primaryWhite),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ),
+          const BackButtonWidget(),
           Align(
             alignment: Alignment.center,
             child: SingleChildScrollView(
@@ -33,14 +22,16 @@ class RecoveryPasswordScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                 const LogoWidget(),
+                  const LogoWidget(),
                   Padding(
-                    padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+                    padding: EdgeInsets.all(
+                        MediaQuery.of(context).size.width * 0.02),
                     child: TextFieldWidget(
                       icon: const Icon(Icons.email),
                       controller: recoverPasswordController,
                       text: 'Email',
-                      validator: (value) => value!.isEmpty ? 'Campo vacío' : null,
+                      validator: (value) =>
+                          value!.isEmpty ? 'Campo vacío' : null,
                     ),
                   ),
                   Padding(
