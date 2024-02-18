@@ -43,9 +43,13 @@ class HomeScreen extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return const Dialog(
+                              return Dialog(
+                                backgroundColor: AppColors.primaryWhite.withOpacity(0.9),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                                 alignment: Alignment.topCenter,
-                                child: UserActionsModal(),
+                                child: const UserActionsModal(),
                               );
                             },
                           );
