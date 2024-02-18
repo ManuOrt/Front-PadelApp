@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
+import 'package:front_end_padelapp/screens/screens.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
@@ -37,9 +38,17 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: size.width * 0.04),
-                      GestureDetector(
+                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const Dialog(
+                                alignment: Alignment.topCenter,
+                                child: UserActionsModal(),
+                              );
+                            },
+                          );
                         },
                         child: const Icon(
                           Icons.person,

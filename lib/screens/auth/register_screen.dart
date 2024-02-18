@@ -106,7 +106,9 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         SizedBox(width: size.width * 0.01),
                         GestureDetector(
-                          onTap: onTap,
+                           onTap: () {
+                            Navigator.pushNamed(context, 'login');
+                          },
                           child: const Text(
                             'Iniciar Sesión',
                             style: TextStyle(
