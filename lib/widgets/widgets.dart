@@ -6,3 +6,4 @@ export 'package:front_end_padelapp/widgets/onboarding_widgets/youtube_player.dar
 export 'package:front_end_padelapp/widgets/logo_widget.dart';
 export 'package:front_end_padelapp/widgets/modals/user_actions_modal.dart';
 export 'package:front_end_padelapp/widgets/headers/header.dart';
+export 'package:front_end_padelapp/widgets/buttons/button_back.dart';
