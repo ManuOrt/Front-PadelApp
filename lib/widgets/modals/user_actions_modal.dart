@@ -14,7 +14,7 @@ class UserActionsModal extends StatelessWidget {
         children: [
           Image.asset(
             'assets/img/logo/logo-blue.png',
-            width: 200,
+            width: size.width * 0.5,
             height: 150,
           ),
           SizedBox(height: size.height * 0.01),
