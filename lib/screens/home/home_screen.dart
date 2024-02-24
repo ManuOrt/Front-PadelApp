@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
+import 'package:front_end_padelapp/widgets/carousel_widget.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/providers.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
@@ -51,10 +55,8 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 alignment: Alignment.topCenter,
                                 child: SizedBox(
-                                  width:
-                                      size.width * 0.8,
-                                  height:
-                                      size.height * 0.5,
+                                  width: size.width * 0.8,
+                                  height: size.height * 0.5,
                                   child: const UserActionsModal(),
                                 ),
                               );
@@ -114,6 +116,26 @@ class HomeScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+          ),
+          SizedBox(height: size.height * 0.03),
+          FutureBuilder(
+            future:
+                Provider.of<UsersProvider>(context, listen: false).getUsers(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('Error: ${snapshot.error}'),
+                );
+              } else {
+                return CarouselWidget(
+                  items: snapshot.data,
+                );
+              }
+            },
           ),
         ],
       ),

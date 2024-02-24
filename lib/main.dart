@@ -11,6 +11,9 @@ void main() => runApp(
           ChangeNotifierProvider(
             create: (_) => AuthProvider(),
           ),
+          ChangeNotifierProvider(
+            create: (_) => UsersProvider(),
+          ),
         ],
         child: const MyApp(),
       ),
