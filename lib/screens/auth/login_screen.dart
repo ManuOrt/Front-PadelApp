@@ -28,7 +28,11 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const LogoWidget(),
+                    LogoWidget(
+                      width: size.width * 0.5,
+                      height: size.height * 0.2,
+                      color: 'white',
+                    ),
                     SizedBox(height: size.height * 0.02),
                     TextFieldWidget(
                       text: 'Email',

@@ -30,7 +30,11 @@ class RegisterScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const LogoWidget(),
+                    LogoWidget(
+                      width: size.width * 0.5,
+                      height: size.height * 0.2,
+                      color: 'white',
+                    ),
                     SizedBox(height: size.height * 0.02),
                     TextFieldWidget(
                       text: 'Usuario',
@@ -107,7 +111,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         SizedBox(width: size.width * 0.01),
                         GestureDetector(
-                           onTap: () {
+                          onTap: () {
                             Navigator.pushNamed(context, 'login');
                           },
                           child: const Text(

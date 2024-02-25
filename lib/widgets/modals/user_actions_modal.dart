@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front_end_padelapp/widgets/buttons/buttons_modal.dart';
+import 'package:front_end_padelapp/widgets/widgets.dart';
 
 class UserActionsModal extends StatelessWidget {
   const UserActionsModal({Key? key}) : super(key: key);
@@ -12,11 +12,10 @@ class UserActionsModal extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Image.asset(
-            'assets/img/logo/logo-blue.png',
-            width: size.width * 0.5,
-            height: 150,
-          ),
+          LogoWidget(
+              width: size.width * 0.5,
+              height: size.height * 0.2,
+              color: 'blue'),
           SizedBox(height: size.height * 0.01),
           ButtonsModal(
             label: 'INICIAR SESIÓN',
@@ -35,7 +34,7 @@ class UserActionsModal extends StatelessWidget {
           ButtonsModal(
             label: 'OPCIONES',
             onPressed: () {
-              //TODO: Add options
+              Navigator.pushNamed(context, 'options');
             },
           ),
         ],

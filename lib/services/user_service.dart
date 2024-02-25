@@ -19,7 +19,7 @@ class UserServices {
         throw Exception('Failed to load users');
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }
