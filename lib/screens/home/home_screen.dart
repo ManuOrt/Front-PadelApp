@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
-import 'package:front_end_padelapp/widgets/carousel_widget.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +17,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           Container(
             width: size.width,
-            height: size.height * 0.25,
+            height: size.height * 0.2,
             decoration: BoxDecoration(
               color: AppColors.primary.withOpacity(0.9),
             ),
@@ -28,11 +27,10 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
                   child: Row(
                     children: [
-                      Image.asset(
-                        'assets/img/logo/logo-white.png',
-                        width: 100,
-                        height: 100,
-                      ),
+                      LogoWidget(
+                          width: size.width * 0.2,
+                          height: size.height * 0.1,
+                          color: 'white'),
                       const Spacer(),
                       GestureDetector(
                         onTap: () {},
@@ -127,17 +125,23 @@ class HomeScreen extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('Error: ${snapshot.error}'),
+                return const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                      'Error: No se han podido cargar los entrenadores disponibles'),
                 );
               } else {
                 return CarouselWidget(
                   items: snapshot.data,
+                  size: size,
                 );
               }
             },
           ),
         ],
+      ),
+      bottomNavigationBar: FooterWidget(
+        size: size,
       ),
     );
   }

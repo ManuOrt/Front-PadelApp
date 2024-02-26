@@ -8,6 +8,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     final TextEditingController recoverPasswordController =
         TextEditingController();
 
@@ -22,10 +23,13 @@ class RecoveryPasswordScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const LogoWidget(),
+                  LogoWidget(
+                    width: size.width * 0.5,
+                    height: size.height * 0.2,
+                    color: 'white',
+                  ),
                   Padding(
-                    padding: EdgeInsets.all(
-                        MediaQuery.of(context).size.width * 0.02),
+                    padding: EdgeInsets.all(size.width * 0.02),
                     child: TextFieldWidget(
                       icon: const Icon(Icons.email),
                       controller: recoverPasswordController,
@@ -39,12 +43,10 @@ class RecoveryPasswordScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(width: size.width * 0.01),
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.01,
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.07,
-                          width: MediaQuery.of(context).size.width * 0.88,
+                          height: size.height * 0.07,
+                          width: size.width * 0.88,
                           child: ElevatedButton(
                             onPressed: () {},
                             child: const Center(
