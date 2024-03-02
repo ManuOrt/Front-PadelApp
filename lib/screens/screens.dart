@@ -5,3 +5,4 @@ export 'package:front_end_padelapp/screens/auth/register_screen.dart';
 export 'package:front_end_padelapp/screens/home/home_screen.dart';
 export 'package:front_end_padelapp/screens/onboarding/onboarding_screens.dart';
 export 'package:front_end_padelapp/screens/options/options_screen.dart';
+export 'package:front_end_padelapp/screens/auth/profile/profile_screen.dart';

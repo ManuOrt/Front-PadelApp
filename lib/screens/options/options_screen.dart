@@ -8,105 +8,114 @@ class OptionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final List<CustomListTileWidget> customListTiles = [
+      CustomListTileWidget(
+        title: 'Cambiar a modo oscuro',
+        sitchWidget: Switch(
+          value: false,
+          onChanged: (value) {},
+          activeColor: AppColors.primary,
+        ),
+        onChanged: (value) {},
+        onTap: () {},
+      ),
+      CustomListTileWidget(
+        title: 'Idioma',
+        icon: const Icon(
+          Icons.language,
+          color: AppColors.primary,
+        ),
+        onTap: () {},
+      ),
+      CustomListTileWidget(
+        title: 'Opciones Notificaciones',
+        icon: const Icon(
+          Icons.notifications_active_outlined,
+          color: AppColors.primary,
+        ),
+        onTap: () {},
+      ),
+      CustomListTileWidget(
+        title: 'Seguridad',
+        icon: const Icon(
+          Icons.shield_outlined,
+          color: AppColors.primary,
+        ),
+        onTap: () {},
+      ),
+      CustomListTileWidget(
+        title: 'Ver Video Tutorial',
+        icon: const Icon(
+          Icons.featured_video_outlined,
+          color: AppColors.primary,
+        ),
+        onTap: () {},
+      ),
+    ];
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
         children: [
-          Container(
-            width: size.width,
-            height: size.height * 0.07,
-            color: AppColors.primary,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Row(
-              children: [
-                LogoWidget(
-                  width: size.width * 0.2,
-                  height: size.height * 0.1,
-                  color: 'blue',
-                ),
-                const Spacer(),
-                GestureDetector(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.notifications,
-                    color: AppColors.primary,
-                  ),
-                ),
-                SizedBox(width: size.width * 0.04),
-                GestureDetector(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.person,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Divider(
-            color: Colors.transparent,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context, 'home');
-                  },
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: AppColors.primary,
-                  ),
-                ),
-                SizedBox(width: size.width * 0.04),
-                const Text(
-                  'Opciones',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: ListView(
-                children: [
-                  ListTile(
-                    title: const Text(
-                      'Cambiar a modo oscuro',
-                      style: TextStyle(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    trailing: Switch(
-                      value: true,
-                      onChanged: (bool value) {
-                        // TODO: Añadir funcionalidad para agregar modo oscuro
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(child: HeaderScreen()),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context, 'home');
                       },
-                      activeColor: AppColors.primary,
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: AppColors.primary,
+                      ),
                     ),
-                    onTap: () {
-                      Navigator.pushNamed(context, 'profile');
-                    },
-                    tileColor: Colors.grey[200],
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 20.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      side: const BorderSide(
-                          color: AppColors.primary, width: 2.0),
+                    SizedBox(width: size.width * 0.04),
+                    const Text(
+                      'Opciones',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              SizedBox(
+                height: size.height * 0.8,
+                child: Padding(
+                  padding: EdgeInsets.all(size.aspectRatio * 40.0),
+                  child: ListView.builder(
+                    itemCount: customListTiles.length,
+                    itemBuilder: (context, index) {
+                      final tile = customListTiles[index];
+                      return Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: size.aspectRatio * 5.0),
+                        child: CustomListTileWidget(
+                          title: tile.title,
+                          sitchWidget: tile.sitchWidget,
+                          onChanged: tile.onChanged,
+                          icon: tile.icon,
+                          onTap: tile.onTap,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: FooterWidget(
+              size: size,
             ),
-          )
+          ),
         ],
       ),
     );
