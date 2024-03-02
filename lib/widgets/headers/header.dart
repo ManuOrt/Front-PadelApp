@@ -8,8 +8,9 @@ class HeaderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Padding(
+    return SizedBox(
+      height: size.height * 0.15,
+      child: Padding(
         padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
         child: Row(
           children: [
@@ -38,7 +39,11 @@ class HeaderScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       alignment: Alignment.topCenter,
-                      child: const UserActionsModal(),
+                      child: SizedBox(
+                        width: size.width * 0.8,
+                        height: size.height * 0.5,
+                        child: const UserActionsModal(),
+                      ),
                     );
                   },
                 );
