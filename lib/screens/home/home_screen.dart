@@ -116,27 +116,27 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: size.height * 0.03),
-          FutureBuilder(
-            future:
-                Provider.of<UsersProvider>(context, listen: false).getUsers(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                return const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                      'Error: No se han podido cargar los entrenadores disponibles'),
-                );
-              } else {
-                return CarouselWidget(
-                  items: snapshot.data,
-                  size: size,
-                );
-              }
-            },
+          Padding(
+            padding: EdgeInsets.only(left: size.width * 0.05),
+            child: FutureBuilder(
+              future:
+                  Provider.of<UsersProvider>(context, listen: false).getUsers(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return const Text(
+                      'Error: No se han podido cargar los entrenadores disponibles');
+                } else {
+                  return CarouselWidget(
+                    items: snapshot.data,
+                    size: size,
+                  );
+                }
+              },
+            ),
           ),
         ],
       ),
