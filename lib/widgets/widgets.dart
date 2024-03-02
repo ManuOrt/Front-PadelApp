@@ -11,3 +11,4 @@ export 'package:front_end_padelapp/widgets/modals/user_actions_modal.dart';
 export 'package:front_end_padelapp/widgets/onboarding_widgets/ball_indicator.dart';
 export 'package:front_end_padelapp/widgets/onboarding_widgets/onboarding_button.dart';
 export 'package:front_end_padelapp/widgets/onboarding_widgets/youtube_player.dart';
+export 'package:front_end_padelapp/widgets/general_widgets/custom_list_tile_widget.dart';
