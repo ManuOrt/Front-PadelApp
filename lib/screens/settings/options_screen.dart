@@ -53,47 +53,48 @@ class OptionsScreen extends StatelessWidget {
       ),
     ];
     return Scaffold(
-      body: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(child: HeaderScreen()),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context, 'home');
-                      },
-                      child: const Icon(
-                        Icons.arrow_back,
-                        color: AppColors.primary,
-                      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(child: HeaderScreen()),
+            Padding(
+              padding: EdgeInsets.only(left: size.width * 0.04),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context, 'home');
+                    },
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: AppColors.primary,
                     ),
-                    SizedBox(width: size.width * 0.04),
-                    const Text(
-                      'Opciones',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary),
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(width: size.width * 0.04),
+                  const Text(
+                    'Opciones',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: size.height * 0.8,
-                child: Padding(
-                  padding: EdgeInsets.all(size.aspectRatio * 40.0),
+            ),
+            Padding(
+              padding: EdgeInsets.all(size.height * 0.02),
+              child: SingleChildScrollView(
+                child: Container(
                   child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: customListTiles.length,
                     itemBuilder: (context, index) {
                       final tile = customListTiles[index];
                       return Padding(
                         padding:
-                            EdgeInsets.symmetric(vertical: size.aspectRatio * 5.0),
+                            EdgeInsets.symmetric(vertical: size.height * 0.003),
                         child: CustomListTileWidget(
                           title: tile.title,
                           sitchWidget: tile.sitchWidget,
@@ -106,17 +107,48 @@ class OptionsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: FooterWidget(
-              size: size,
             ),
-          ),
-        ],
+            SizedBox(height: size.height * 0.01),
+            Padding(
+              padding: EdgeInsets.only(left: size.width * 0.04),
+              child: const Text(
+                'Cerrar Sesión',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(size.height * 0.02),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 2,
+                  itemBuilder: (context, index) {
+                    final tile = customListTiles[index];
+                    return Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: size.height * 0.003),
+                      child: CustomListTileWidget(
+                        title: tile.title,
+                        sitchWidget: tile.sitchWidget,
+                        onChanged: tile.onChanged,
+                        icon: tile.icon,
+                        onTap: tile.onTap,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: FooterWidget(
+        size: size,
       ),
     );
   }
