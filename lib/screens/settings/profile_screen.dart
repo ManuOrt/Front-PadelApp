@@ -84,7 +84,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              //TODO: Tamaño entre opciones y CustomListTileWidget diferente, en diferentes dispositivos
+              //TODO: Tamaño entre opciones y CustomListTileWidget diferente, en diferentes dispositivos.
               padding: EdgeInsets.all(size.height * 0.02),
               child: ListView.builder(
                 shrinkWrap: true,
