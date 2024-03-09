@@ -25,6 +25,7 @@ class CustomListTileWidget extends StatelessWidget {
         style: const TextStyle(
           color: AppColors.primary,
           fontWeight: FontWeight.bold,
+          fontSize: 14,
         ),
       ),
       trailing: sitchWidget,
