@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:front_end_padelapp/models/user_model.dart';
+import 'package:front_end_padelapp/providers/trainers_provider.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -119,9 +121,10 @@ class HomeScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: size.width * 0.05),
             child: FutureBuilder(
-              future:
-                  Provider.of<UsersProvider>(context, listen: false).getUsers(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
+              future: Provider.of<TrainersProvider>(context, listen: false)
+                  .getTrainers(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<UserModel>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -131,7 +134,7 @@ class HomeScreen extends StatelessWidget {
                       'Error: No se han podido cargar los entrenadores disponibles');
                 } else {
                   return CarouselWidget(
-                    items: snapshot.data,
+                    items: snapshot.data!,
                     size: size,
                   );
                 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front_end_padelapp/providers/trainers_provider.dart';
 import 'package:front_end_padelapp/routes/routes.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:provider/provider.dart';
@@ -14,20 +15,23 @@ void main() => runApp(
           ChangeNotifierProvider(
             create: (_) => UsersProvider(),
           ),
+          ChangeNotifierProvider(
+            create: (_) => TrainersProvider(),
+          ),
         ],
         child: const MyApp(),
       ),
     );
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PaddleHub',
-      initialRoute: 'profile',
+      initialRoute: 'home',
       routes: customRoutes,
       theme: ThemeData(
         primaryColor: Colors.white,

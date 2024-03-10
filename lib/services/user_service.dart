@@ -7,7 +7,7 @@ class UserServices {
   Future<List<UserModel>> getUserData() async {
     try {
       var url = Uri.parse(
-          'http://10.0.2.2:8080/padel-coach/user-management/v1/users');
+          'http://10.0.2.2:8080/paddlehub/user-management/v1/users');
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -22,4 +22,22 @@ class UserServices {
       rethrow;
     }
   }
+
+  /*Future<UserModel> getUserById(int id) async {
+    try {
+      var url = Uri.parse(
+          'http://10.0.2.2:8080/paddlehub/user-management/v1/users/$id');
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        UserModel user = UserModel.fromJson(data);
+        return user;
+      } else {
+        throw Exception('Failed to load user');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }*/
 }
