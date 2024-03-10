@@ -4,10 +4,22 @@ import 'package:front_end_padelapp/services/user_service.dart';
 
 class UsersProvider extends ChangeNotifier {
   List<UserModel> users = [];
+  UserModel? user;
 
   getUsers() async {
     users = await UserServices().getUserData();
     notifyListeners();
     return users;
+  }
+
+  getUserById(int id) async {
+    user = await UserServices().getUserById(id);
+    notifyListeners();
+    return user;
+  }
+
+  void setCurrentUser(UserModel user) {
+    this.user = user;
+    notifyListeners();
   }
 }

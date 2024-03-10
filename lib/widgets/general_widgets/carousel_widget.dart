@@ -63,7 +63,7 @@ class CarouselWidget extends StatelessWidget {
                               items[index].name + ' ' + items[index].surname,
                               style: const TextStyle(
                                 color: AppColors.primaryWhite,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w500,
                                 fontSize: 16,
                               ),
                             ),
@@ -81,7 +81,7 @@ class CarouselWidget extends StatelessWidget {
                                     items[index].address,
                                     style: const TextStyle(
                                       color: AppColors.primaryWhite,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -101,7 +101,7 @@ class CarouselWidget extends StatelessWidget {
                                   items[index].phoneNumber,
                                   style: const TextStyle(
                                     color: AppColors.primaryWhite,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ],
