@@ -5,17 +5,19 @@ class CustomListTileWidget extends StatelessWidget {
   const CustomListTileWidget({
     Key? key,
     required this.title,
-    this.sitchWidget,
+    this.switchWidget,
     this.onChanged,
     this.onTap,
-    this.icon,
+    this.leadingIcon,
+    this.trealingIcon,
   }) : super(key: key);
 
   final String title;
-  final Switch? sitchWidget;
+  final Switch? switchWidget;
+  final Icon? trealingIcon;
   final Function(bool)? onChanged;
   final VoidCallback? onTap;
-  final Icon? icon;
+  final Icon? leadingIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +30,8 @@ class CustomListTileWidget extends StatelessWidget {
           fontSize: 14,
         ),
       ),
-      trailing: sitchWidget,
-      leading: icon,
+      trailing: switchWidget ?? trealingIcon,
+      leading: leadingIcon,
       onTap: onTap,
       tileColor: Colors.grey[200],
       contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),

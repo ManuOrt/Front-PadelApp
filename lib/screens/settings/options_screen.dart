@@ -11,7 +11,7 @@ class OptionsScreen extends StatelessWidget {
     final List<CustomListTileWidget> customListTilesOptions = [
       CustomListTileWidget(
         title: 'Cambiar a modo oscuro',
-        sitchWidget: Switch(
+        switchWidget: Switch(
           value: false,
           onChanged: (value) {},
           activeColor: AppColors.primary,
@@ -21,32 +21,48 @@ class OptionsScreen extends StatelessWidget {
       ),
       CustomListTileWidget(
         title: 'Idioma',
-        icon: const Icon(
+        leadingIcon: const Icon(
           Icons.language,
+          color: AppColors.primary,
+        ),
+        trealingIcon: const Icon(
+          Icons.arrow_forward_ios,
           color: AppColors.primary,
         ),
         onTap: () {},
       ),
       CustomListTileWidget(
         title: 'Opciones Notificaciones',
-        icon: const Icon(
+        leadingIcon: const Icon(
           Icons.notifications_active_outlined,
+          color: AppColors.primary,
+        ),
+        trealingIcon: const Icon(
+          Icons.arrow_forward_ios,
           color: AppColors.primary,
         ),
         onTap: () {},
       ),
       CustomListTileWidget(
         title: 'Seguridad',
-        icon: const Icon(
+        leadingIcon: const Icon(
           Icons.shield_outlined,
+          color: AppColors.primary,
+        ),
+        trealingIcon: const Icon(
+          Icons.arrow_forward_ios,
           color: AppColors.primary,
         ),
         onTap: () {},
       ),
       CustomListTileWidget(
         title: 'Ver Video Tutorial',
-        icon: const Icon(
+        leadingIcon: const Icon(
           Icons.featured_video_outlined,
+          color: AppColors.primary,
+        ),
+        trealingIcon: const Icon(
+          Icons.arrow_forward_ios,
           color: AppColors.primary,
         ),
         onTap: () {},
@@ -55,16 +71,24 @@ class OptionsScreen extends StatelessWidget {
     final List<CustomListTileWidget> customListTilesPreferences = [
       CustomListTileWidget(
         title: 'Políticas y Privacidad',
-        icon: const Icon(
+        leadingIcon: const Icon(
           Icons.privacy_tip_outlined,
+          color: AppColors.primary,
+        ),
+        trealingIcon: const Icon(
+          Icons.arrow_forward_ios,
           color: AppColors.primary,
         ),
         onTap: () {},
       ),
       CustomListTileWidget(
         title: 'Ayuda y Soporte',
-        icon: const Icon(
+        leadingIcon: const Icon(
           Icons.help_outline,
+          color: AppColors.primary,
+        ),
+        trealingIcon: const Icon(
+          Icons.arrow_forward_ios,
           color: AppColors.primary,
         ),
         onTap: () {},
@@ -104,25 +128,24 @@ class OptionsScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(size.height * 0.02),
               child: SingleChildScrollView(
-                child: Container(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: customListTilesOptions.length,
-                    itemBuilder: (context, index) {
-                      final tile = customListTilesOptions[index];
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: size.height * 0.015),
-                        child: CustomListTileWidget(
-                          title: tile.title,
-                          sitchWidget: tile.sitchWidget,
-                          onChanged: tile.onChanged,
-                          icon: tile.icon,
-                          onTap: tile.onTap,
-                        ),
-                      );
-                    },
-                  ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: customListTilesOptions.length,
+                  itemBuilder: (context, index) {
+                    final tile = customListTilesOptions[index];
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: size.height * 0.015),
+                      child: CustomListTileWidget(
+                        title: tile.title,
+                        switchWidget: tile.switchWidget,
+                        onChanged: tile.onChanged,
+                        leadingIcon: tile.leadingIcon,
+                        onTap: tile.onTap,
+                        trealingIcon: tile.trealingIcon,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -151,9 +174,10 @@ class OptionsScreen extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: size.height * 0.015),
                       child: CustomListTileWidget(
                         title: tile.title,
-                        sitchWidget: tile.sitchWidget,
+                        switchWidget: tile.switchWidget,
                         onChanged: tile.onChanged,
-                        icon: tile.icon,
+                        leadingIcon: tile.leadingIcon,
+                        trealingIcon: tile.trealingIcon,
                         onTap: tile.onTap,
                       ),
                     );
