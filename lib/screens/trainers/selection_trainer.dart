@@ -1,4 +1,4 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/models/user_model.dart';
 import 'package:front_end_padelapp/providers/users_provider.dart';
 import 'package:provider/provider.dart';
@@ -53,4 +53,4 @@ class SelectionTrainer extends StatelessWidget {
       ),
     );
   }
-}*/
+}

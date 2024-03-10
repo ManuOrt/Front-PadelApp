@@ -12,9 +12,14 @@ class UsersProvider extends ChangeNotifier {
     return users;
   }
 
-  /*getUserById(int id) async {
+  getUserById(int id) async {
     user = await UserServices().getUserById(id);
     notifyListeners();
     return user;
-  }*/
+  }
+
+  void setCurrentUser(UserModel user) {
+    this.user = user;
+    notifyListeners();
+  }
 }

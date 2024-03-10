@@ -13,6 +13,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
+    UserModel? user = Provider.of<UsersProvider>(context).user;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,6 +70,7 @@ class HomeScreen extends StatelessWidget {
                           color: AppColors.primaryWhite,
                         ),
                       ),
+                      Text(user != null ? 'Conectado como ${user.name}' : 'No estás conectado'),
                     ],
                   ),
                 ),

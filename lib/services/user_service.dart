@@ -23,7 +23,7 @@ class UserServices {
     }
   }
 
-  /*Future<UserModel> getUserById(int id) async {
+  Future<UserModel> getUserById(int id) async {
     try {
       var url = Uri.parse(
           'http://10.0.2.2:8080/paddlehub/user-management/v1/users/$id');
@@ -39,5 +39,5 @@ class UserServices {
     } catch (e) {
       rethrow;
     }
-  }*/
+  }
 }
