@@ -54,13 +54,13 @@ class ProfileScreen extends StatelessWidget {
       ),
     ];
     return Scaffold(
+      appBar: const HeaderScreen(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(child: HeaderScreen()),
             Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: EdgeInsets.only(left: size.width * 0.04, top: size.height * 0.02),
               child: Row(
                 children: [
                   GestureDetector(
@@ -84,7 +84,6 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              //TODO: Tamaño entre opciones y CustomListTileWidget diferente, en diferentes dispositivos.
               padding: EdgeInsets.all(size.height * 0.02),
               child: ListView.builder(
                 shrinkWrap: true,

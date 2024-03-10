@@ -8,7 +8,7 @@ class OptionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final List<CustomListTileWidget> customListTiles = [
+    final List<CustomListTileWidget> customListTilesOptions = [
       CustomListTileWidget(
         title: 'Cambiar a modo oscuro',
         sitchWidget: Switch(
@@ -52,14 +52,33 @@ class OptionsScreen extends StatelessWidget {
         onTap: () {},
       ),
     ];
+    final List<CustomListTileWidget> customListTilesPreferences = [
+      CustomListTileWidget(
+        title: 'Políticas y Privacidad',
+        icon: const Icon(
+          Icons.privacy_tip_outlined,
+          color: AppColors.primary,
+        ),
+        onTap: () {},
+      ),
+      CustomListTileWidget(
+        title: 'Ayuda y Soporte',
+        icon: const Icon(
+          Icons.help_outline,
+          color: AppColors.primary,
+        ),
+        onTap: () {},
+      ),
+    ];
     return Scaffold(
+      appBar: const HeaderScreen(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(child: HeaderScreen()),
             Padding(
-              padding: EdgeInsets.only(left: size.width * 0.04),
+              padding: EdgeInsets.only(
+                  left: size.width * 0.04, top: size.height * 0.02),
               child: Row(
                 children: [
                   GestureDetector(
@@ -89,12 +108,11 @@ class OptionsScreen extends StatelessWidget {
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: customListTiles.length,
+                    itemCount: customListTilesOptions.length,
                     itemBuilder: (context, index) {
-                      final tile = customListTiles[index];
+                      final tile = customListTilesOptions[index];
                       return Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: size.height * 0.003),
+                        padding: EdgeInsets.only(bottom: size.height * 0.015),
                         child: CustomListTileWidget(
                           title: tile.title,
                           sitchWidget: tile.sitchWidget,
@@ -112,7 +130,7 @@ class OptionsScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: size.width * 0.04),
               child: const Text(
-                'Cerrar Sesión',
+                'Preferencias',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -126,12 +144,11 @@ class OptionsScreen extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 2,
+                  itemCount: customListTilesPreferences.length,
                   itemBuilder: (context, index) {
-                    final tile = customListTiles[index];
+                    final tile = customListTilesPreferences[index];
                     return Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: size.height * 0.003),
+                      padding: EdgeInsets.only(bottom: size.height * 0.015),
                       child: CustomListTileWidget(
                         title: tile.title,
                         sitchWidget: tile.sitchWidget,
