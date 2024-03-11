@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:front_end_padelapp/models/user_model.dart';
+import 'package:front_end_padelapp/providers/trainers_provider.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +13,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
+    UserModel? user = Provider.of<UsersProvider>(context).user;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,6 +70,7 @@ class HomeScreen extends StatelessWidget {
                           color: AppColors.primaryWhite,
                         ),
                       ),
+                      Text(user != null ? 'Conectado como ${user.name}' : 'No estás conectado'),
                     ],
                   ),
                 ),
@@ -119,9 +124,10 @@ class HomeScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: size.width * 0.05),
             child: FutureBuilder(
-              future:
-                  Provider.of<UsersProvider>(context, listen: false).getUsers(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
+              future: Provider.of<TrainersProvider>(context, listen: false)
+                  .getTrainers(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<UserModel>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -131,7 +137,7 @@ class HomeScreen extends StatelessWidget {
                       'Error: No se han podido cargar los entrenadores disponibles');
                 } else {
                   return CarouselWidget(
-                    items: snapshot.data,
+                    items: snapshot.data!,
                     size: size,
                   );
                 }

@@ -12,6 +12,7 @@ class UserModel {
   dynamic createDate;
   String? userImg;
   String? gender;
+  String? userType;
   int? languageId;
 
   UserModel({
@@ -28,6 +29,7 @@ class UserModel {
     this.createDate,
     this.userImg,
     this.gender,
+    this.userType,
     this.languageId,
   });
 
@@ -45,6 +47,7 @@ class UserModel {
         createDate: json["create_date"],
         userImg: json["user_img"],
         gender: json["gender"],
+        userType: json["user_type"],
         languageId: json["language_id"],
       );
 
@@ -63,6 +66,7 @@ class UserModel {
         "create_date": createDate,
         "user_img": userImg,
         "gender": gender,
+        "user_type": userType,
         "language_id": languageId,
       };
 }
