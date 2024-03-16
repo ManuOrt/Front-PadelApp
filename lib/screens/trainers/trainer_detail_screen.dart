@@ -26,6 +26,7 @@ class TrainerDetailScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
+            print('Error details: ${snapshot.error}');
             return const Center(
               child: Text('Error: No se ha podido cargar el usuario'),
             );
@@ -81,11 +82,22 @@ class TrainerDetailScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          trainer.description ??
-                              'No description',
+                          trainer.description ?? 'No description',
                           style: const TextStyle(
                               fontSize: 16, color: AppColors.primary),
                         ),
+                        const SizedBox(height: 15),
+                        const Text("Categorías",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 15),
+                        const Text("Localización",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ),
