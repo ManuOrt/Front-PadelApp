@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/models/user_model.dart';
 import 'package:front_end_padelapp/providers/trainers_provider.dart';
+import 'package:front_end_padelapp/screens/screens.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -31,10 +32,20 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
                   child: Row(
                     children: [
-                      LogoWidget(
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()),
+                          );
+                        },
+                        child: LogoWidget(
                           width: size.width * 0.2,
                           height: size.height * 0.1,
-                          color: 'white'),
+                          color: 'white',
+                        ),
+                      ),
                       const Spacer(),
                       GestureDetector(
                         onTap: () {},
@@ -46,31 +57,49 @@ class HomeScreen extends StatelessWidget {
                       SizedBox(width: size.width * 0.04),
                       GestureDetector(
                         onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                backgroundColor:
-                                    AppColors.primaryWhite.withOpacity(0.9),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                alignment: Alignment.topCenter,
-                                child: SizedBox(
-                                  width: size.width * 0.8,
-                                  height: size.height * 0.5,
-                                  child: const UserActionsModal(),
-                                ),
-                              );
-                            },
-                          );
+                          if (user != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ProfileScreen()),
+                            );
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  backgroundColor:
+                                      AppColors.primaryWhite.withOpacity(0.9),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  alignment: Alignment.topCenter,
+                                  child: SizedBox(
+                                    width: size.width * 0.8,
+                                    height: size.height * 0.5,
+                                    child: const UserActionsModal(),
+                                  ),
+                                );
+                              },
+                            );
+                          }
                         },
-                        child: const Icon(
-                          Icons.person,
-                          color: AppColors.primaryWhite,
-                        ),
+                        child: user != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image.network(
+                                  user.userImg ??
+                                      'url_de_tu_imagen_predeterminada',
+                                  width: size.width * 0.08,
+                                  height: size.height * 0.05,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : const Icon(
+                                Icons.person,
+                                color: AppColors.primaryWhite,
+                              ),
                       ),
-                      Text(user != null ? 'Conectado como ${user.name}' : 'No estás conectado'),
                     ],
                   ),
                 ),
@@ -139,6 +168,15 @@ class HomeScreen extends StatelessWidget {
                   return CarouselWidget(
                     items: snapshot.data!,
                     size: size,
+                    onTrainerSelected: (selectedTrainer) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              TrainerDetailScreen(trainer: selectedTrainer),
+                        ),
+                      );
+                    },
                   );
                 }
               },

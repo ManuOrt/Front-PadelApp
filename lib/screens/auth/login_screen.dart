@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
     return AuthScreensModel(
       child: Stack(
         children: [
-          const BackButtonWidget(),
+          const BackButtonWidget(opacity: 0.3, iconColor: AppColors.primaryWhite),
           Align(
             alignment: Alignment.center,
             child: SingleChildScrollView(
