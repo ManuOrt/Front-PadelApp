@@ -13,7 +13,8 @@ class TrainerServices {
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
-        var data = jsonDecode(response.body) as List;
+        var body = utf8.decode(response.bodyBytes);
+        var data = jsonDecode(body) as List;
         List<UserModel> users =
             data.map((user) => UserModel.fromJson(user)).toList();
         List<UserModel> trainers =
@@ -28,21 +29,22 @@ class TrainerServices {
   }
 
   Future<TrainerDetailModel> getTrainerDetails(int trainerId) async {
-  try {
-    var url = Uri.parse(
-        'http://10.0.2.2:8080/paddlehub/user-management/v1/users/${trainerId.toString()}');
-    var response = await http.get(url);
+    try {
+      var url = Uri.parse(
+          'http://10.0.2.2:8080/paddlehub/user-management/v1/users/${trainerId.toString()}');
+      var response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      UserModel user = UserModel.fromJson(data);
-      TrainerModel trainer = TrainerModel.fromJson(data);
-      return TrainerDetailModel(user: user, trainer: trainer);
-    } else {
-      throw Exception('Failed to load trainer details');
+      if (response.statusCode == 200) {
+        var body = utf8.decode(response.bodyBytes);
+        var data = jsonDecode(body);
+        UserModel user = UserModel.fromJson(data);
+        TrainerModel trainer = TrainerModel.fromJson(data);
+        return TrainerDetailModel(user: user, trainer: trainer);
+      } else {
+        throw Exception('Failed to load trainer details');
+      }
+    } catch (e) {
+      rethrow;
     }
-  } catch (e) {
-    rethrow;
   }
-}
 }
