@@ -1,13 +1,13 @@
 class TrainerModel {
   int? id;
-  int? userId; // Añade el ID del usuario aquí
+  int? userId;
   String? description;
   String? location;
-  int? rangeLocation;
+  String? rangeLocation;
 
   TrainerModel({
     this.id,
-    this.userId, // Añade el ID del usuario aquí
+    this.userId,
     this.description,
     this.location,
     this.rangeLocation,
