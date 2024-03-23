@@ -66,12 +66,20 @@ class CarouselWidget extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                items[index].name + ' ' + items[index].surname,
-                                style: const TextStyle(
-                                  color: AppColors.primaryWhite,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
+                              Tooltip(
+                                message: items[index].name +
+                                    ' ' +
+                                    items[index].surname,
+                                child: Text(
+                                  items[index].name +
+                                      ' ' +
+                                      items[index].surname,
+                                  style: const TextStyle(
+                                    color: AppColors.primaryWhite,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                               SizedBox(height: size.height * 0.01),
@@ -99,7 +107,7 @@ class CarouselWidget extends StatelessWidget {
                               Row(
                                 children: [
                                   const Icon(
-                                    Icons.star,
+                                    Icons.phone,
                                     color: Colors.yellow,
                                     size: 15,
                                   ),

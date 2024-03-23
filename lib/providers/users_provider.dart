@@ -22,4 +22,10 @@ class UsersProvider extends ChangeNotifier {
     this.user = user;
     notifyListeners();
   }
+
+  void updateUser(UserModel user) {
+    UserServices().updateUser(user);
+    this.user = user;
+    notifyListeners();
+  }
 }

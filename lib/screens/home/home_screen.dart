@@ -14,8 +14,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
     UserModel? user = Provider.of<UsersProvider>(context).user;
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,10 +58,9 @@ class HomeScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           if (user != null) {
-                            Navigator.push(
+                            Navigator.pushNamed(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ProfileScreen()),
+                              'profile',
                             );
                           } else {
                             showDialog(

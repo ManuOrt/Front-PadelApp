@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PaddleHub',
-      initialRoute: 'home',
+      initialRoute: 'login',
       routes: customRoutes,
       theme: ThemeData(
         primaryColor: Colors.white,

@@ -35,7 +35,9 @@ class HeaderScreen extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.only(top: 15.0,),
+          padding: const EdgeInsets.only(
+            top: 15.0,
+          ),
           child: IconButton(
             icon: const Icon(
               Icons.notifications,
@@ -49,10 +51,11 @@ class HeaderScreen extends StatelessWidget implements PreferredSizeWidget {
           child: GestureDetector(
             onTap: () {
               if (user != null) {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const ProfileScreen()),
+                    builder: (context) => const ProfileScreen(),
+                  ),
                 );
               } else {
                 showDialog(

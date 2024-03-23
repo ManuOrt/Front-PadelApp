@@ -19,8 +19,9 @@ class ProfileScreen extends StatelessWidget {
           Icons.arrow_forward_ios,
           color: AppColors.primary,
         ),
-        onChanged: (value) {},
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, 'edit_profile');
+        },
       ),
       CustomListTileWidget(
         title: 'Cambiar contraseña',

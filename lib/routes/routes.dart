@@ -10,4 +10,5 @@ var customRoutes = <String, WidgetBuilder>{
   'home': (context) => const HomeScreen(),
   'options': (context) => const OptionsScreen(),
   'profile': (context) => const ProfileScreen(),
+  'edit_profile': (context) => EditProfileScreen(),
 };

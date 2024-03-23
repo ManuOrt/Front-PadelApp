@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 class UserServices {
   Future<List<UserModel>> getUserData() async {
     try {
-      var url = Uri.parse(
-          'http://10.0.2.2:8080/paddlehub/user-management/v1/users');
+      var url =
+          Uri.parse('http://10.0.2.2:8080/paddlehub/user-management/v1/users');
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -35,6 +35,26 @@ class UserServices {
         return user;
       } else {
         throw Exception('Failed to load user');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateUser(UserModel user) async {
+    try {
+      var url = Uri.parse(
+          'http://10.0.2.2:8080/paddlehub/user-management/v1/users/${user.id}');
+      var response = await http.put(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(user.toJson()));
+
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        throw Exception('Failed to update user');
       }
     } catch (e) {
       rethrow;
