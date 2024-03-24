@@ -102,37 +102,7 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Center(
-                  child: SizedBox(
-                    width: size.width * 0.87,
-                    height: size.height * 0.07,
-                    child: TextField(
-                      style: const TextStyle(
-                        color: AppColors.primaryBlack,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: 'Buscar',
-                        hintStyle: const TextStyle(
-                          color: AppColors.primaryBlack,
-                        ),
-                        prefixIcon: const Icon(Icons.search,
-                            color: AppColors.primaryBlack),
-                        suffixIcon: const Icon(
-                          Icons.filter_list,
-                          color: AppColors.primaryBlack,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        filled: true,
-                        fillColor: AppColors.secondaryWhite,
-                        contentPadding:
-                            const EdgeInsets.symmetric(vertical: 10),
-                      ),
-                    ),
-                  ),
-                ),
+                SearcherWidget(size: size),
               ],
             ),
           ),

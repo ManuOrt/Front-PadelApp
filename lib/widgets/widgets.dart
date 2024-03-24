@@ -4,6 +4,7 @@ export 'package:front_end_padelapp/widgets/general_widgets/carousel_widget.dart'
 export 'package:front_end_padelapp/widgets/general_widgets/custom_tile.dart';
 export 'package:front_end_padelapp/widgets/general_widgets/logo_widget.dart';
 export 'package:front_end_padelapp/widgets/general_widgets/password_field.dart';
+export 'package:front_end_padelapp/widgets/general_widgets/searcher_widget.dart';
 export 'package:front_end_padelapp/widgets/general_widgets/text_field.dart';
 export 'package:front_end_padelapp/widgets/header_footer/footer_widget.dart';
 export 'package:front_end_padelapp/widgets/header_footer/header.dart';
