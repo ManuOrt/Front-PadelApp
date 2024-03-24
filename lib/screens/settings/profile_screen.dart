@@ -11,33 +11,50 @@ class ProfileScreen extends StatelessWidget {
     final List<CustomListTileWidget> customListTiles = [
       CustomListTileWidget(
         title: 'Editar perfil',
-        icon: const Icon(
+        leadingIcon: const Icon(
           Icons.person_outline,
           color: AppColors.primary,
         ),
-        onChanged: (value) {},
-        onTap: () {},
+        trealingIcon: const Icon(
+          Icons.arrow_forward_ios,
+          color: AppColors.primary,
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, 'edit_profile');
+        },
       ),
       CustomListTileWidget(
         title: 'Cambiar contraseña',
-        icon: const Icon(
+        leadingIcon: const Icon(
           Icons.lock_outline,
+          color: AppColors.primary,
+        ),
+        trealingIcon: const Icon(
+          Icons.arrow_forward_ios,
           color: AppColors.primary,
         ),
         onTap: () {},
       ),
       CustomListTileWidget(
         title: 'Notificaciones',
-        icon: const Icon(
+        leadingIcon: const Icon(
           Icons.notifications_active_outlined,
+          color: AppColors.primary,
+        ),
+        trealingIcon: const Icon(
+          Icons.arrow_forward_ios,
           color: AppColors.primary,
         ),
         onTap: () {},
       ),
       CustomListTileWidget(
         title: 'Opciones',
-        icon: const Icon(
+        leadingIcon: const Icon(
           Icons.settings,
+          color: AppColors.primary,
+        ),
+        trealingIcon: const Icon(
+          Icons.arrow_forward_ios,
           color: AppColors.primary,
         ),
         onTap: () {
@@ -46,8 +63,12 @@ class ProfileScreen extends StatelessWidget {
       ),
       CustomListTileWidget(
         title: 'Cerrar sesión',
-        icon: const Icon(
+        leadingIcon: const Icon(
           Icons.logout,
+          color: AppColors.primary,
+        ),
+        trealingIcon: const Icon(
+          Icons.arrow_forward_ios,
           color: AppColors.primary,
         ),
         onTap: () {},
@@ -60,7 +81,8 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: size.width * 0.04, top: size.height * 0.02),
+              padding: EdgeInsets.only(
+                  left: size.width * 0.04, top: size.height * 0.02),
               child: Row(
                 children: [
                   GestureDetector(
@@ -92,13 +114,13 @@ class ProfileScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final tile = customListTiles[index];
                   return Padding(
-                    padding:
-                        EdgeInsets.only(bottom: size.height * 0.015),
+                    padding: EdgeInsets.only(bottom: size.height * 0.015),
                     child: CustomListTileWidget(
                       title: tile.title,
-                      sitchWidget: tile.sitchWidget,
+                      switchWidget: tile.switchWidget,
                       onChanged: tile.onChanged,
-                      icon: tile.icon,
+                      leadingIcon: tile.leadingIcon,
+                      trealingIcon: tile.trealingIcon,
                       onTap: tile.onTap,
                     ),
                   );

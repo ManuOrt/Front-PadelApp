@@ -15,7 +15,8 @@ class RecoveryPasswordScreen extends StatelessWidget {
     return AuthScreensModel(
       child: Stack(
         children: [
-          const BackButtonWidget(opacity: 0.3, iconColor: AppColors.primaryWhite),
+          const BackButtonWidget(
+              opacity: 0.3, iconColor: AppColors.primaryWhite),
           Align(
             alignment: Alignment.center,
             child: SingleChildScrollView(
@@ -31,7 +32,8 @@ class RecoveryPasswordScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(size.width * 0.02),
                     child: TextFieldWidget(
-                      icon: const Icon(Icons.email),
+                      withSize: size.width * 0.87,
+                      prefixIcon: const Icon(Icons.email),
                       controller: recoverPasswordController,
                       text: 'Email',
                       validator: (value) =>

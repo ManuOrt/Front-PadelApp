@@ -18,7 +18,8 @@ class LoginScreen extends StatelessWidget {
     return AuthScreensModel(
       child: Stack(
         children: [
-          const BackButtonWidget(opacity: 0.3, iconColor: AppColors.primaryWhite),
+          const BackButtonWidget(
+              opacity: 0.3, iconColor: AppColors.primaryWhite),
           Align(
             alignment: Alignment.center,
             child: SingleChildScrollView(
@@ -40,17 +41,32 @@ class LoginScreen extends StatelessWidget {
                       validator: (value) => value!.isEmpty
                           ? 'Campo vacio'
                           : null, //TODO: Add email vaildation with regex or something
-                      icon: const Icon(
+                      prefixIcon: const Icon(
                         Icons.email,
                         color: AppColors.primaryGray,
                       ),
+                      style: const TextStyle(
+                        color: AppColors.primaryGray,
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      withSize: size.width * 0.87,
                     ),
                     SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
                       text: 'Contraseña',
-                      passwordController: passwordController,
-                      size: MediaQuery.of(context).size,
+                      controller: passwordController,
+                      withSize: size.width * 0.87,
                       authProvider: Provider.of<AuthProvider>(context),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      style: const TextStyle(
+                        color: AppColors.primaryGray,
+                      ),
                       validator: (valor) => valor != null && valor.length < 6
                           ? 'Contraseña poco segura'
                           : null,
