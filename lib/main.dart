@@ -14,7 +14,7 @@ void main() async {
   UsersProvider usersProvider = UsersProvider();
   TrainersProvider trainersProvider = TrainersProvider();
 
-  int userId = 3;
+  int userId = 1;
 
   UserModel user = await usersProvider.getUserById(userId);
 

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:front_end_padelapp/models/user_model.dart';
-import 'package:front_end_padelapp/providers/trainers_provider.dart';
+import 'package:front_end_padelapp/models/models.dart';
+import 'package:front_end_padelapp/providers/providers.dart';
 import 'package:front_end_padelapp/screens/screens.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-
-import '../../providers/providers.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
@@ -156,7 +154,8 @@ class HomeScreen extends StatelessWidget {
               future: Provider.of<TrainersProvider>(context, listen: false)
                   .getTrainers(),
               builder: (BuildContext context,
-                  AsyncSnapshot<List<UserModel>> snapshot) {
+                  AsyncSnapshot<List<TrainerModel>> snapshot) {
+                // Cambia esto para que sea de tipo AsyncSnapshot<List<TrainerModel>>
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -168,12 +167,14 @@ class HomeScreen extends StatelessWidget {
                   return CarouselWidget(
                     items: snapshot.data!,
                     size: size,
-                    onTrainerSelected: (selectedTrainer) {
+                    onTrainerSelected: (selectedTrainerId, trainerDetails, averageRating) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              TrainerDetailScreen(trainer: selectedTrainer),
+                          builder: (context) => TrainerDetailScreen(
+                            trainerId: selectedTrainerId,
+                            trainerDetails: trainerDetails,
+                          ),
                         ),
                       );
                     },
