@@ -92,13 +92,10 @@ class CarouselWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Tooltip(
-                                message: items[index].user!.name! +
-                                    ' ' +
-                                    items[index].user!.surname!,
+                                message:
+                                    '${items[index].user!.name!} ${items[index].user!.surname!}',
                                 child: Text(
-                                  items[index].user!.name! +
-                                      ' ' +
-                                      items[index].user!.surname!,
+                                  '${items[index].user!.name!} ${items[index].user!.surname!}',
                                   style: const TextStyle(
                                     color: AppColors.primaryWhite,
                                     fontWeight: FontWeight.w500,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/models/user_model.dart';
-import 'package:front_end_padelapp/providers/trainers_provider.dart';
 import 'package:front_end_padelapp/routes/routes.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:provider/provider.dart';
