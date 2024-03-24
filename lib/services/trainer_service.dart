@@ -1,24 +1,22 @@
 import 'dart:convert';
-
-import 'package:front_end_padelapp/models/trainer_detail_model.dart';
-import 'package:front_end_padelapp/models/trainer_model.dart';
-import 'package:front_end_padelapp/models/user_model.dart';
+import 'package:front_end_padelapp/models/models.dart';
 import 'package:http/http.dart' as http;
 
+
+import 'user_service.dart';
+
 class TrainerServices {
-  Future<List<UserModel>> getTrainerData() async {
+  Future<List<TrainerModel>> getTrainersData() async {
     try {
-      var url =
-          Uri.parse('http://10.0.2.2:8080/paddlehub/user-management/v1/users');
+      var url = Uri.parse(
+          'http://10.0.2.2:8080/paddlehub/user-management/v1/trainers');
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
         var body = utf8.decode(response.bodyBytes);
         var data = jsonDecode(body) as List;
-        List<UserModel> users =
-            data.map((user) => UserModel.fromJson(user)).toList();
-        List<UserModel> trainers =
-            users.where((user) => user.userType?.toUpperCase() == 'T').toList();
+        List<TrainerModel> trainers =
+            data.map((trainer) => TrainerModel.fromJson(trainer)).toList();
         return trainers;
       } else {
         throw Exception('Failed to load trainers');
@@ -28,36 +26,55 @@ class TrainerServices {
     }
   }
 
-  Future<TrainerDetailModel> getTrainerDetails(int trainerId) async {
+  Future<TrainerModel> getTrainerById(int trainerId) async {
     try {
-      var userUrl = Uri.parse(
-          'http://10.0.2.2:8080/paddlehub/user-management/v1/users/${trainerId.toString()}');
-      var userResponse = await http.get(userUrl);
-
-      if (userResponse.statusCode == 200) {
-        var userBody = utf8.decode(userResponse.bodyBytes);
-        var userData = jsonDecode(userBody);
-        UserModel user = UserModel.fromJson(userData);
-
-        // Actualiza la URL aquí
-        var trainerUrl = Uri.parse(
-            'http://10.0.2.2:8080/paddlehub/user-management/v1/trainers/${trainerId.toString()}');
-        var trainerResponse = await http.get(trainerUrl);
-
-        if (trainerResponse.statusCode == 200) {
-          var trainerBody = utf8.decode(trainerResponse.bodyBytes);
-          var trainerData = jsonDecode(trainerBody);
-          TrainerModel trainer = TrainerModel.fromJson(trainerData);
-
-          return TrainerDetailModel(user: user, trainer: trainer);
-        } else {
-          throw Exception('Failed to load trainer details');
-        }
+      var url = Uri.parse(
+          'http://10.0.2.2:8080/paddlehub/user-management/v1/trainers/${trainerId.toString()}');
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        var body = utf8.decode(response.bodyBytes);
+        var data = jsonDecode(body);
+        TrainerModel trainer = TrainerModel.fromJson(data);
+        return trainer;
       } else {
-        throw Exception('Failed to load user details');
+        throw Exception('Failed to load trainer');
       }
     } catch (e) {
       rethrow;
     }
   }
+
+Future<TrainerDetailModel> getTrainerOpinions(int trainerId) async {
+  try {
+    TrainerModel trainer = await getTrainerById(trainerId);
+    UserServices userServices = UserServices();
+
+    var opinionsUrl = Uri.parse(
+        'http://10.0.2.2:8080/paddlehub/trainer-opinion/v1/trainers/${trainer.id.toString()}/opinions');
+    var opinionsResponse = await http.get(opinionsUrl);
+    if (opinionsResponse.statusCode == 200) {
+      var opinionsBody = utf8.decode(opinionsResponse.bodyBytes);
+      var opinionsData = jsonDecode(opinionsBody) as List;
+      List<OpinionModel> opinions = [];
+      for (var opinionData in opinionsData) {
+        OpinionModel opinion = OpinionModel.fromJson(opinionData);
+        UserModel user = await userServices.getUserById(opinion.userId!);
+        opinion.userName = user.name;
+        opinion.userImg = user.userImg;
+        opinion.surname = user.surname;
+        opinions.add(opinion);
+      }
+
+      return TrainerDetailModel(
+        user: trainer.user!,
+        trainer: trainer,
+        opinions: opinions,
+      );
+    } else {
+      throw Exception('Failed to load trainer opinions');
+    }
+  } catch (e) {
+    rethrow;
+  }
+}
 }

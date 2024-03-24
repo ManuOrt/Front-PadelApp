@@ -1,12 +1,13 @@
-import 'package:front_end_padelapp/models/trainer_model.dart';
-import 'package:front_end_padelapp/models/user_model.dart';
+import 'package:front_end_padelapp/models/models.dart';
 
 class TrainerDetailModel {
   final UserModel user;
   final TrainerModel trainer;
+  final List<OpinionModel> opinions;
 
   TrainerDetailModel({
     required this.user,
     required this.trainer,
+    required this.opinions,
   });
 }
