@@ -11,7 +11,8 @@ class UserServices {
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
-        var data = jsonDecode(response.body) as List;
+        var body = utf8.decode(response.bodyBytes);
+        var data = jsonDecode(body) as List;
         List<UserModel> users =
             data.map((user) => UserModel.fromJson(user)).toList();
         return users;
@@ -30,7 +31,8 @@ class UserServices {
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
+        var body = utf8.decode(response.bodyBytes);
+        var data = jsonDecode(body);
         UserModel user = UserModel.fromJson(data);
         return user;
       } else {

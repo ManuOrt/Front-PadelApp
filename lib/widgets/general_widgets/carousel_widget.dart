@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:front_end_padelapp/models/models.dart';
+import 'package:front_end_padelapp/services/trainer_service.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
+import 'package:front_end_padelapp/utils/get_valoration.dart';
 
 class CarouselWidget extends StatelessWidget {
   const CarouselWidget({
@@ -9,9 +12,23 @@ class CarouselWidget extends StatelessWidget {
     required this.onTrainerSelected,
   }) : super(key: key);
 
-  final List<dynamic> items;
+  final List<TrainerModel> items;
   final Size size;
-  final Function(dynamic) onTrainerSelected;
+  final Function(int, TrainerDetailModel, double) onTrainerSelected;
+
+  Future<double> getAverageRating(int trainerId) async {
+    TrainerDetailModel trainerDetails =
+        await TrainerServices().getTrainerOpinions(trainerId);
+    return calculateAverageRating(trainerDetails.opinions);
+  }
+
+  Future<Map<String, dynamic>> getRatingAndCount(int trainerId) async {
+    TrainerDetailModel trainerDetails =
+        await TrainerServices().getTrainerOpinions(trainerId);
+    double averageRating = calculateAverageRating(trainerDetails.opinions);
+    int count = trainerDetails.opinions.length;
+    return {'averageRating': averageRating, 'count': count};
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +40,14 @@ class CarouselWidget extends StatelessWidget {
         itemCount: items.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () => onTrainerSelected(items[index]),
+            onTap: () async {
+              int trainerId = items[index].id!;
+              TrainerDetailModel trainerDetails =
+                  await TrainerServices().getTrainerOpinions(trainerId);
+              double averageRating =
+                  calculateAverageRating(trainerDetails.opinions);
+              onTrainerSelected(trainerId, trainerDetails, averageRating);
+            },
             child: Padding(
               padding: const EdgeInsets.only(right: 10.0),
               child: SizedBox(
@@ -40,7 +64,8 @@ class CarouselWidget extends StatelessWidget {
                           fit: StackFit.expand,
                           children: [
                             Image.network(
-                              items[index].userImg,
+                              items[index].user?.userImg ??
+                                  'assets/img/default-image.jpg',
                               fit: BoxFit.cover,
                             ),
                             Container(
@@ -67,13 +92,13 @@ class CarouselWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Tooltip(
-                                message: items[index].name +
+                                message: items[index].user!.name! +
                                     ' ' +
-                                    items[index].surname,
+                                    items[index].user!.surname!,
                                 child: Text(
-                                  items[index].name +
+                                  items[index].user!.name! +
                                       ' ' +
-                                      items[index].surname,
+                                      items[index].user!.surname!,
                                   style: const TextStyle(
                                     color: AppColors.primaryWhite,
                                     fontWeight: FontWeight.w500,
@@ -93,7 +118,7 @@ class CarouselWidget extends StatelessWidget {
                                   SizedBox(width: size.width * 0.01),
                                   Expanded(
                                     child: Text(
-                                      items[index].address,
+                                      items[index].user?.address ?? '',
                                       style: const TextStyle(
                                         color: AppColors.primaryWhite,
                                         fontWeight: FontWeight.w400,
@@ -104,22 +129,34 @@ class CarouselWidget extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(height: size.height * 0.01),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.phone,
-                                    color: Colors.yellow,
-                                    size: 15,
-                                  ),
-                                  SizedBox(width: size.width * 0.01),
-                                  Text(
-                                    items[index].phoneNumber,
-                                    style: const TextStyle(
-                                      color: AppColors.primaryWhite,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
+                              FutureBuilder<Map<String, dynamic>>(
+                                future: getRatingAndCount(items[index].id!),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  } else {
+                                    return Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.star,
+                                          color: Colors.yellow,
+                                          size: 15,
+                                        ),
+                                        SizedBox(width: size.width * 0.01),
+                                        Text(
+                                          '${snapshot.data?['averageRating']?.toStringAsFixed(1) ?? '0.0'} (${snapshot.data?['count'] ?? 0} opiniones)',
+                                          style: const TextStyle(
+                                            color: AppColors.primaryWhite,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                },
                               ),
                             ],
                           ),

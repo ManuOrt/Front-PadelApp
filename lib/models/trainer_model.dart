@@ -1,13 +1,15 @@
+import 'package:front_end_padelapp/models/user_model.dart';
+
 class TrainerModel {
   int? id;
-  int? userId; // Añade el ID del usuario aquí
+  UserModel? user;
   String? description;
   String? location;
-  int? rangeLocation;
+  String? rangeLocation;
 
   TrainerModel({
     this.id,
-    this.userId, // Añade el ID del usuario aquí
+    this.user,
     this.description,
     this.location,
     this.rangeLocation,
@@ -15,7 +17,7 @@ class TrainerModel {
 
   factory TrainerModel.fromJson(Map<String, dynamic> json) => TrainerModel(
         id: json["id"],
-        userId: json["user_id"],
+        user: UserModel.fromJson(json["user"]),
         description: json["description"],
         location: json["location"],
         rangeLocation: json["range_location"],
@@ -23,7 +25,7 @@ class TrainerModel {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "user_id": userId,
+        "user": user?.toJson(),
         "description": description,
         "location": location,
         "range_location": rangeLocation,
