@@ -91,14 +91,18 @@ class CarouselWidget extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                '${items[index].user?.name ?? ''} ${items[index].user?.surname ?? ''}',
-                                style: const TextStyle(
-                                  color: AppColors.primaryWhite,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
+                              Tooltip(
+                                message:
+                                    '${items[index].user!.name!} ${items[index].user!.surname!}',
+                                child: Text(
+                                  '${items[index].user!.name!} ${items[index].user!.surname!}',
+                                  style: const TextStyle(
+                                    color: AppColors.primaryWhite,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                overflow: TextOverflow.ellipsis,
                               ),
                               SizedBox(height: size.height * 0.01),
                               Row(

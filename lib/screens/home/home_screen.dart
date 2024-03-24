@@ -12,8 +12,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
     UserModel? user = Provider.of<UsersProvider>(context).user;
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,10 +56,9 @@ class HomeScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           if (user != null) {
-                            Navigator.push(
+                            Navigator.pushNamed(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ProfileScreen()),
+                              'profile',
                             );
                           } else {
                             showDialog(
@@ -101,37 +100,7 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Center(
-                  child: SizedBox(
-                    width: size.width * 0.87,
-                    height: size.height * 0.07,
-                    child: TextField(
-                      style: const TextStyle(
-                        color: AppColors.primaryBlack,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: 'Buscar',
-                        hintStyle: const TextStyle(
-                          color: AppColors.primaryBlack,
-                        ),
-                        prefixIcon: const Icon(Icons.search,
-                            color: AppColors.primaryBlack),
-                        suffixIcon: const Icon(
-                          Icons.filter_list,
-                          color: AppColors.primaryBlack,
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        filled: true,
-                        fillColor: AppColors.secondaryWhite,
-                        contentPadding:
-                            const EdgeInsets.symmetric(vertical: 10),
-                      ),
-                    ),
-                  ),
-                ),
+                SearcherWidget(size: size),
               ],
             ),
           ),

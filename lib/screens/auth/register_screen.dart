@@ -17,10 +17,12 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
     return AuthScreensModel(
       child: Stack(
         children: [
-          const BackButtonWidget(opacity: 0.3, iconColor: AppColors.primaryWhite),
+          const BackButtonWidget(
+              opacity: 0.3, iconColor: AppColors.primaryWhite),
           Align(
             alignment: Alignment.center,
             child: SingleChildScrollView(
@@ -37,24 +39,40 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.02),
                     TextFieldWidget(
+                      withSize: size.width * 0.87,
                       text: 'Usuario',
                       controller: userController,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      style: const TextStyle(
+                        color: AppColors.primaryGray,
+                      ),
                       validator: (value) => value!.length < 6
                           ? 'Introduce un mínimo de 6 caracteres'
                           : null,
-                      icon: const Icon(
+                      prefixIcon: const Icon(
                         Icons.person,
                         color: AppColors.primaryGray,
                       ),
                     ),
                     SizedBox(height: size.height * 0.015),
                     TextFieldWidget(
+                      withSize: size.width * 0.87,
                       text: 'Correo Electrónico',
                       controller: emailController,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      style: const TextStyle(
+                        color: AppColors.primaryGray,
+                      ),
                       validator: (value) => value!.length < 6
                           ? 'Introduce un mínimo de 6 caracteres'
                           : null,
-                      icon: const Icon(
+                      prefixIcon: const Icon(
                         Icons.email,
                         color: AppColors.primaryGray,
                       ),
@@ -62,10 +80,17 @@ class RegisterScreen extends StatelessWidget {
                     SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
                       text: 'Contraseña',
-                      passwordController: passwordController,
-                      size: MediaQuery.of(context).size,
+                      controller: passwordController,
+                      withSize: size.width * 0.87,
                       authProvider:
                           Provider.of<AuthProvider>(context, listen: false),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      style: const TextStyle(
+                        color: AppColors.primaryGray,
+                      ),
                       validator: (valor) => valor != null && valor.length < 6
                           ? 'Contraseña poco segura'
                           : null,
@@ -73,10 +98,16 @@ class RegisterScreen extends StatelessWidget {
                     SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
                       text: 'Repetir Contraseña',
-                      passwordController: passwordRepeatController,
-                      size: MediaQuery.of(context).size,
-                      authProvider:
-                          Provider.of<AuthProvider>(context, listen: false),
+                      controller: passwordRepeatController,
+                      withSize: size.width * 0.87,
+                      authProvider: Provider.of<AuthProvider>(context),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      style: const TextStyle(
+                        color: AppColors.primaryGray,
+                      ),
                       validator: (valor) {
                         if (valor != passwordController.text) {
                           return 'Las contraseñas no coinciden';

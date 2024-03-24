@@ -9,7 +9,7 @@ class UserModel {
   String? password;
   DateTime? dateOfBirth;
   bool? emailVerified;
-  dynamic createDate;
+  DateTime? createDate;
   String? userImg;
   String? gender;
   String? userType;
@@ -69,4 +69,39 @@ class UserModel {
         "user_type": userType,
         "language_id": languageId,
       };
+
+  UserModel copyWith(
+      {int? id,
+      String? name,
+      String? surname,
+      String? email,
+      String? phoneNumber,
+      String? address,
+      String? username,
+      String? password,
+      DateTime? dateOfBirth,
+      bool? emailVerified,
+      DateTime? createDate,
+      String? userImg,
+      String? gender,
+      String? userType,
+      int? languageId}) {
+    return UserModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      surname: surname ?? this.surname,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      address: address ?? this.address,
+      username: username ?? this.username,
+      password: password ?? this.password,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      emailVerified: emailVerified ?? this.emailVerified,
+      createDate: createDate ?? this.createDate,
+      userImg: userImg ?? this.userImg,
+      gender: gender ?? this.gender,
+      userType: userType ?? this.userType,
+      languageId: languageId ?? this.languageId,
+    );
+  }
 }

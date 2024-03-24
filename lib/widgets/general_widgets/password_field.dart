@@ -3,38 +3,37 @@ import 'package:front_end_padelapp/providers/providers.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 
 class PasswordTextFieldWidget extends StatelessWidget {
+  final TextEditingController controller;
+  final double withSize;
+  final TextStyle? style;
+  final OutlineInputBorder? border;
+  final AuthProvider authProvider;
+  final String? text;
+  final String? Function(String?)? validator;
+
   const PasswordTextFieldWidget(
       {super.key,
-      required this.passwordController,
-      required this.size,
+      required this.controller,
+      required this.withSize,
+      this.style,
+      this.border,
       required this.authProvider,
-      required this.text,
+      this.text,
       this.validator});
-
-  final TextEditingController passwordController;
-  final Size size;
-  final AuthProvider authProvider;
-  final String text;
-  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: size.width * 0.87,
+      width: withSize,
       child: TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: validator,
-        controller: passwordController,
+        controller: controller,
         obscureText: authProvider.password,
         decoration: InputDecoration(
           hintText: text,
-          hintStyle: const TextStyle(
-            color: AppColors.primaryGray,
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(8),
-          ),
+          hintStyle: style,
+          border: border,
           suffixIcon: IconButton(
             icon: Icon(
               authProvider.password
