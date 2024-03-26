@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'user_service.dart';
 
 class TrainerServices {
+  UserServices userServices = UserServices();
+
   Future<List<TrainerModel>> getTrainersData() async {
     try {
       var url = Uri.parse(
@@ -17,6 +19,12 @@ class TrainerServices {
         var data = jsonDecode(body) as List;
         List<TrainerModel> trainers =
             data.map((trainer) => TrainerModel.fromJson(trainer)).toList();
+
+        for (var trainer in trainers) {
+          UserModel user = await userServices.getUserById(trainer.userId!);
+          trainer.user = user;
+        }
+
         return trainers;
       } else {
         throw Exception('Failed to load trainers');
@@ -35,6 +43,8 @@ class TrainerServices {
         var body = utf8.decode(response.bodyBytes);
         var data = jsonDecode(body);
         TrainerModel trainer = TrainerModel.fromJson(data);
+        UserModel user = await userServices.getUserById(trainer.userId!);
+        trainer.user = user;
         return trainer;
       } else {
         throw Exception('Failed to load trainer');
@@ -47,7 +57,6 @@ class TrainerServices {
   Future<TrainerDetailModel> getTrainerOpinions(int trainerId) async {
     try {
       TrainerModel trainer = await getTrainerById(trainerId);
-      UserServices userServices = UserServices();
 
       var opinionsUrl = Uri.parse(
           'http://10.0.2.2:8080/paddlehub/trainer-opinion/v1/trainers/$trainerId/opinions');
