@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:front_end_padelapp/models/models.dart';
 import 'package:front_end_padelapp/providers/trainers_provider.dart';
-import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
+import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -78,11 +78,31 @@ class TrainerDetailScreen extends StatelessWidget {
                         const TextStyle(fontSize: 16, color: AppColors.primary),
                   ),
                   SizedBox(height: size.height * 0.02),
-                  const Text("Categorías",
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold)),
+                  const Text(
+                    "Categorías",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: size.height * 0.01),
+                  trainer.categories != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            for (int i = 0;
+                                i < trainer.categories!.length;
+                                i++) ...[
+                              SizedBox(height: size.height * 0.01),
+                              Text(
+                                trainer.categories![i].toString(),
+                                style: const TextStyle(
+                                    fontSize: 16, color: AppColors.primary),
+                              ),
+                            ],
+                          ],
+                        )
+                      : const Text('No categories'),
                   SizedBox(height: size.height * 0.02),
                   const Text("Localización",
                       style: TextStyle(
@@ -112,12 +132,10 @@ class TrainerDetailScreen extends StatelessWidget {
                               color: i % 2 == 0
                                   ? AppColors.primary.withOpacity(0.8)
                                   : const Color(0xFFE6E6E6),
-                              borderRadius:
-                                  BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(5),
                               border: i % 2 != 0
                                   ? Border.all(
-                                      color:
-                                          AppColors.primary,
+                                      color: AppColors.primary,
                                       width: 1,
                                     )
                                   : null,
