@@ -7,7 +7,7 @@ import 'user_service.dart';
 
 class TrainerServices {
   UserServices userServices = UserServices();
-    String urlIp = '192.168.1.38';
+  String urlIp = '192.168.1.38';
   String urlLocal = '10.0.2.2';
 
   Future<List<TrainerModel>> getTrainersData() async {

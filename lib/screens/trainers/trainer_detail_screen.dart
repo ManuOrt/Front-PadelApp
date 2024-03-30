@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:front_end_padelapp/models/models.dart';
 import 'package:front_end_padelapp/providers/trainers_provider.dart';
+import 'package:front_end_padelapp/services/location_service.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -12,9 +14,12 @@ import '../../utils/get_valoration.dart';
 class TrainerDetailScreen extends StatelessWidget {
   final int trainerId;
   final TrainerDetailModel trainerDetails;
+  final LocationService locationService = LocationService();
 
-  const TrainerDetailScreen(
-      {super.key, required this.trainerId, required this.trainerDetails});
+  TrainerDetailScreen(
+      {super.key,
+      required this.trainerId,
+      required this.trainerDetails,});
 
   @override
   Widget build(BuildContext context) {
@@ -87,19 +92,23 @@ class TrainerDetailScreen extends StatelessWidget {
                   ),
                   SizedBox(height: size.height * 0.01),
                   trainer.categories != null
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      ? Wrap(
+                          spacing: 20.0,
                           children: [
-                            for (int i = 0;
-                                i < trainer.categories!.length;
-                                i++) ...[
-                              SizedBox(height: size.height * 0.01),
-                              Text(
-                                trainer.categories![i].toString(),
-                                style: const TextStyle(
-                                    fontSize: 16, color: AppColors.primary),
+                            for (int i = 0; i < trainer.categories!.length; i++)
+                              Chip(
+                                label: Text(
+                                  trainer.categories![i].toString(),
+                                  style: const TextStyle(
+                                      fontSize: 16, color: AppColors.primary),
+                                ),
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                  side: const BorderSide(
+                                      color: AppColors.primary),
+                                ),
                               ),
-                            ],
                           ],
                         )
                       : const Text('No categories'),
@@ -110,10 +119,33 @@ class TrainerDetailScreen extends StatelessWidget {
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold)),
                   SizedBox(height: size.height * 0.01),
-                  Text(
-                    trainer.location ?? 'No location',
-                    style:
-                        const TextStyle(fontSize: 16, color: AppColors.primary),
+                  FutureBuilder<LatLng>(
+                    future: locationService.getLatLng(trainer.location),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        LatLng latLng = snapshot.data!;
+                        return SizedBox(
+                          height: size.height * 0.3,
+                          child: GoogleMap(
+                            initialCameraPosition: CameraPosition(
+                              target: latLng,
+                              zoom: 14.4746,
+                            ),
+                            markers: {
+                              Marker(
+                                markerId: const MarkerId('1'),
+                                position: latLng,
+                                infoWindow: InfoWindow(title: trainer.location),
+                              ),
+                            },
+                          ),
+                        );
+                      }
+                    },
                   ),
                   SizedBox(height: size.height * 0.02),
                   const Text("Opiniones",
