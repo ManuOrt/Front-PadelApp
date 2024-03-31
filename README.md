@@ -2,9 +2,10 @@
 
 A new Flutter project.
 
-## Google Maps
+# Google Maps
 ## Dependencies
 - google_maps_flutter
+- geolocator
 ## ApiKey
 - https://console.cloud.google.com/
 ### IOS
@@ -38,3 +39,6 @@ compileSdkVersion 34
  <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyABG3I7QtxODtnBvT-94XLGkxm9zqhftMI"/>
 ```
+
+### Service
+- LocationService
