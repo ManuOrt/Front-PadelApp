@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:front_end_padelapp/models/models.dart';
 import 'package:front_end_padelapp/providers/trainers_provider.dart';
+import 'package:front_end_padelapp/screens/home/home_screen.dart';
 import 'package:front_end_padelapp/services/location_service.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../../utils/get_valoration.dart';
 
 class TrainerDetailScreen extends StatelessWidget {
@@ -16,10 +16,11 @@ class TrainerDetailScreen extends StatelessWidget {
   final TrainerDetailModel trainerDetails;
   final LocationService locationService = LocationService();
 
-  TrainerDetailScreen(
-      {super.key,
-      required this.trainerId,
-      required this.trainerDetails,});
+  TrainerDetailScreen({
+    super.key,
+    required this.trainerId,
+    required this.trainerDetails,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -323,6 +324,18 @@ class TrainerDetailScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: PriceFooterWidget(
+        trainerId: trainerId,
+        onButtonPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  const HomeScreen(),
+            ),
+          );
+        },
       ),
     );
   }
