@@ -13,12 +13,6 @@ void main() async {
   UsersProvider usersProvider = UsersProvider();
   TrainersProvider trainersProvider = TrainersProvider();
 
-  int userId = 1;
-
-  UserModel user = await usersProvider.getUserById(userId);
-
-  usersProvider.setCurrentUser(user);
-
   runApp(
     MultiProvider(
       providers: [
@@ -57,6 +51,10 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: AppColors.primary,
+            selectionColor: AppColors.primary,
+            selectionHandleColor: AppColors.primary),
       ),
     );
   }

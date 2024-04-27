@@ -8,13 +8,14 @@ import 'package:provider/provider.dart';
 class LoginScreen extends StatelessWidget {
   final Function()? onTap;
   final passwordController = TextEditingController();
-  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
 
   LoginScreen({Key? key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return AuthScreensModel(
       child: Stack(
         children: [
@@ -36,8 +37,8 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.02),
                     TextFieldWidget(
-                      text: 'Email',
-                      controller: emailController,
+                      hintText: 'Username',
+                      controller: usernameController,
                       validator: (value) => value!.isEmpty
                           ? 'Campo vacio'
                           : null, //TODO: Add email vaildation with regex or something
@@ -45,7 +46,7 @@ class LoginScreen extends StatelessWidget {
                         Icons.email,
                         color: AppColors.primaryGray,
                       ),
-                      style: const TextStyle(
+                      hintStyle: const TextStyle(
                         color: AppColors.primaryGray,
                       ),
                       border: OutlineInputBorder(
@@ -56,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
-                      text: 'Contraseña',
+                      hintText: 'Contraseña',
                       controller: passwordController,
                       withSize: size.width * 0.87,
                       authProvider: Provider.of<AuthProvider>(context),
@@ -64,10 +65,10 @@ class LoginScreen extends StatelessWidget {
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      style: const TextStyle(
+                      hintStyle: const TextStyle(
                         color: AppColors.primaryGray,
                       ),
-                      validator: (valor) => valor != null && valor.length < 6
+                      validator: (valor) => valor != null && valor.length < 1
                           ? 'Contraseña poco segura'
                           : null,
                     ),
@@ -99,7 +100,17 @@ class LoginScreen extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, 'home');
+                          if (checkUserData(usernameController.text,
+                              passwordController.text, authProvider)) {
+                            Navigator.pushNamed(context, 'home');
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content:
+                                    Text('Usuario o contraseña incorrectos'),
+                              ),
+                            );
+                          }
                         },
                         child: const Text(
                           'INICIAR SESIÓN',
@@ -144,5 +155,14 @@ class LoginScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  bool checkUserData(
+      String username, String password, AuthProvider authProvider) {
+    authProvider.getAuthToken(username, password);
+
+    String token = authProvider.getToken()!;
+
+    return token.isNotEmpty;
   }
 }

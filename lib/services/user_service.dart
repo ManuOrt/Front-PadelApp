@@ -9,8 +9,8 @@ class UserServices {
 
   Future<List<UserModel>> getUserData() async {
     try {
-      var url = Uri.parse(
-          'http://$urlLocal:8080/paddlehub/user-management/v1/users');
+      var url =
+          Uri.parse('http://$urlLocal:8080/paddlehub/user-management/v1/users');
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
