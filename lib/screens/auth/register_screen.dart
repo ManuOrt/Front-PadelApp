@@ -40,13 +40,13 @@ class RegisterScreen extends StatelessWidget {
                     SizedBox(height: size.height * 0.02),
                     TextFieldWidget(
                       withSize: size.width * 0.87,
-                      text: 'Usuario',
+                      hintText: 'Usuario',
                       controller: userController,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      style: const TextStyle(
+                      hintStyle: const TextStyle(
                         color: AppColors.primaryGray,
                       ),
                       validator: (value) => value!.length < 6
@@ -60,13 +60,13 @@ class RegisterScreen extends StatelessWidget {
                     SizedBox(height: size.height * 0.015),
                     TextFieldWidget(
                       withSize: size.width * 0.87,
-                      text: 'Correo Electrónico',
+                      hintText: 'Correo Electrónico',
                       controller: emailController,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      style: const TextStyle(
+                      hintStyle: const TextStyle(
                         color: AppColors.primaryGray,
                       ),
                       validator: (value) => value!.length < 6
@@ -79,7 +79,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
-                      text: 'Contraseña',
+                      hintText: 'Contraseña',
                       controller: passwordController,
                       withSize: size.width * 0.87,
                       authProvider:
@@ -88,7 +88,7 @@ class RegisterScreen extends StatelessWidget {
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      style: const TextStyle(
+                      hintStyle: const TextStyle(
                         color: AppColors.primaryGray,
                       ),
                       validator: (valor) => valor != null && valor.length < 6
@@ -97,7 +97,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
-                      text: 'Repetir Contraseña',
+                      hintText: 'Repetir Contraseña',
                       controller: passwordRepeatController,
                       withSize: size.width * 0.87,
                       authProvider: Provider.of<AuthProvider>(context),
@@ -105,7 +105,7 @@ class RegisterScreen extends StatelessWidget {
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      style: const TextStyle(
+                      hintStyle: const TextStyle(
                         color: AppColors.primaryGray,
                       ),
                       validator: (valor) {

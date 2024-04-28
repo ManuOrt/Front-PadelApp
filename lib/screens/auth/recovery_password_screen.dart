@@ -35,7 +35,7 @@ class RecoveryPasswordScreen extends StatelessWidget {
                       withSize: size.width * 0.87,
                       prefixIcon: const Icon(Icons.email),
                       controller: recoverPasswordController,
-                      text: 'Email',
+                      hintText: 'Email',
                       validator: (value) =>
                           value!.isEmpty ? 'Campo vacío' : null,
                     ),

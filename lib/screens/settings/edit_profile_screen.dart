@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
+import 'package:front_end_padelapp/widgets/general_widgets/dropfiled_widget.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -16,9 +17,12 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController? id;
   TextEditingController? name;
+  TextEditingController? surname;
   TextEditingController? email;
   TextEditingController? password;
   TextEditingController? userImg;
+  TextEditingController? phoneNumber;
+  TextEditingController? gender;
 
   @override
   void didChangeDependencies() {
@@ -27,9 +31,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       final UserModel? user = Provider.of<UsersProvider>(context).user;
       id = TextEditingController(text: user?.id.toString() ?? '');
       name = TextEditingController(text: user?.name ?? '');
+      surname = TextEditingController(text: user?.surname ?? '');
       email = TextEditingController(text: user?.email ?? '');
       password = TextEditingController(text: user?.password ?? '');
       userImg = TextEditingController(text: user?.userImg ?? '');
+      phoneNumber = TextEditingController(text: user?.phoneNumber ?? '');
+      gender = TextEditingController(text: user?.gender ?? '');
     }
   }
 
@@ -72,10 +79,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: Image.network(
-                    userImg!.text,
-                    width: size.width * 0.5,
-                    height: size.height * 0.25,
+                  child: Image.asset(
+                    'assets/img/default-image.jpg',
+                    width: size.width * 0.2,
+                    height: size.height * 0.1,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -97,31 +104,87 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ],
             ),
             SizedBox(height: size.height * 0.02),
-            TextFieldWidget(
-              withSize: size.width * 0.87,
-              controller: name!,
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Color.fromARGB(255, 126, 148, 163),
-                ),
-                borderRadius: BorderRadius.circular(10),
+            SizedBox(
+              width: size.width * 0.87,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFieldWidget(
+                      labelText: 'Nombre',
+                      withSize: size.width * 0.4,
+                      controller: name!,
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      hintStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      labelStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.edit,
+                        color: AppColors.primaryGray,
+                      ),
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'El campo no puede estar vacío';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  SizedBox(width: size.width * 0.02),
+                  Expanded(
+                    child: TextFieldWidget(
+                      labelText: 'Apellidos',
+                      withSize: size.width * 0.4,
+                      controller: surname!,
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      hintStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      labelStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.edit,
+                        color: AppColors.primaryGray,
+                      ),
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'El campo no puede estar vacío';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
               ),
-              style: const TextStyle(
-                color: AppColors.primary,
-              ),
-              suffixIcon: const Icon(
-                Icons.edit,
-                color: AppColors.primaryGray,
-              ),
-              validator: (String? value) {
-                if (value!.isEmpty) {
-                  return 'El campo no puede estar vacío';
-                }
-                return null;
-              },
             ),
             SizedBox(height: size.height * 0.01),
             TextFieldWidget(
+              labelText: 'Email',
               withSize: size.width * 0.87,
               controller: email!,
               border: OutlineInputBorder(
@@ -130,7 +193,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
-              style: const TextStyle(
+              focusBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: AppColors.primary,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              hintStyle: const TextStyle(
+                color: AppColors.primary,
+              ),
+              labelStyle: const TextStyle(
                 color: AppColors.primary,
               ),
               suffixIcon: const Icon(
@@ -146,6 +218,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             SizedBox(height: size.height * 0.01),
             PasswordTextFieldWidget(
+              labelText: 'Contraseña',
               authProvider: Provider.of<AuthProvider>(context),
               withSize: size.width * 0.87,
               controller: password!,
@@ -155,7 +228,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
-              style: const TextStyle(
+              focusBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: AppColors.primary,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              hintStyle: const TextStyle(
+                color: AppColors.primary,
+              ),
+              labelStyle: const TextStyle(
                 color: AppColors.primary,
               ),
               validator: (String? value) {
@@ -164,6 +246,74 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 }
                 return null;
               },
+            ),
+            SizedBox(height: size.height * 0.01),
+            SizedBox(
+              width: size.width * 0.87,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFieldWidget(
+                      labelText: 'Teléfono',
+                      withSize: size.width * 0.87,
+                      controller: phoneNumber!,
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      hintStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      labelStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.edit,
+                        color: AppColors.primaryGray,
+                      ),
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'El campo no puede estar vacío';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  SizedBox(width: size.width * 0.02),
+                  Expanded(
+                    child: DropFieldWidget(
+                      labelText: 'Género',
+                      dropdownValue: 'Masculino',
+                      withSize: size.width * 0.87,
+                      items: const ['Masculino', 'Femenino'],
+                      onChanged: (String? value) {},
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      focusBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      labelStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
             SizedBox(height: size.height * 0.02),
             ElevatedButton(
@@ -198,6 +348,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: FooterWidget(
+        size: size,
       ),
     );
   }

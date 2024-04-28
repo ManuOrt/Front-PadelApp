@@ -136,7 +136,8 @@ class HomeScreen extends StatelessWidget {
                   return CarouselWidget(
                     items: snapshot.data!,
                     size: size,
-                    onTrainerSelected: (selectedTrainerId, trainerDetails, averageRating) {
+                    onTrainerSelected:
+                        (selectedTrainerId, trainerDetails, averageRating) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
