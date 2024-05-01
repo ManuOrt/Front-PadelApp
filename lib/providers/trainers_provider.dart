@@ -3,17 +3,18 @@ import 'package:front_end_padelapp/models/models.dart';
 import 'package:front_end_padelapp/services/trainer_service.dart';
 
 class TrainersProvider extends ChangeNotifier {
-  List<TrainerModel> trainers = []; // Cambia esto para que sea de tipo List<TrainerModel>
+  List<TrainerModel> trainers = [];
 
-  Future<List<TrainerModel>> getTrainers() async {
-    trainers = await TrainerServices().getTrainersData();
+  Future<List<TrainerModel>> getTrainers(String token) async {
+    trainers = await TrainerServices().getTrainersData(token);
     notifyListeners();
     return trainers;
   }
 
-  Future<TrainerDetailModel> getTrainerDetails(TrainerModel trainer) async {
+  Future<TrainerDetailModel> getTrainerDetails(
+      TrainerModel trainer, String token) async {
     TrainerDetailModel trainerDetails =
-        await TrainerServices().getTrainerOpinions(trainer.id!);
+        await TrainerServices().getTrainerOpinions(trainer.id!, token);
     notifyListeners();
     return trainerDetails;
   }

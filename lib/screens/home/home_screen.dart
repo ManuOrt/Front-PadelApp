@@ -81,17 +81,15 @@ class HomeScreen extends StatelessWidget {
                             );
                           }
                         },
-                        child: user != null
+                        child: user != null && user.userImg != null
                             ? ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
                                 child: Image.network(
-                                  user.userImg ??
-                                      'url_de_tu_imagen_predeterminada',
-                                  width: size.width * 0.08,
-                                  height: size.height * 0.05,
+                                  user.userImg!,
+                                  width: size.width * 0.2,
+                                  height: size.height * 0.1,
                                   fit: BoxFit.cover,
-                                ),
-                              )
+                                ))
                             : const Icon(
                                 Icons.person,
                                 color: AppColors.primaryWhite,
@@ -121,7 +119,8 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.only(left: size.width * 0.05),
             child: FutureBuilder(
               future: Provider.of<TrainersProvider>(context, listen: false)
-                  .getTrainers(),
+                  .getTrainers(Provider.of<AuthProvider>(context, listen: false)
+                      .getToken()!),
               builder: (BuildContext context,
                   AsyncSnapshot<List<TrainerModel>> snapshot) {
                 // Cambia esto para que sea de tipo AsyncSnapshot<List<TrainerModel>>

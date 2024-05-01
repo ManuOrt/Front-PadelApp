@@ -7,11 +7,12 @@ class UserServices {
   String urlIp = '192.168.1.38';
   String urlLocal = '10.0.2.2';
 
-  Future<List<UserModel>> getUserData() async {
+  Future<List<UserModel>> getUserData(String token) async {
     try {
       var url =
           Uri.parse('http://$urlLocal:8080/paddlehub/user-management/v1/users');
-      var response = await http.get(url);
+      var response = await http.get(url,
+          headers: <String, String>{'Authorization ': 'Bearer $token'});
 
       if (response.statusCode == 200) {
         var body = utf8.decode(response.bodyBytes);
@@ -27,11 +28,12 @@ class UserServices {
     }
   }
 
-  Future<UserModel> getUserById(int id) async {
+  Future<UserModel> getUserById(String id, String token) async {
     try {
       var url = Uri.parse(
           'http://$urlLocal:8080/paddlehub/user-management/v1/users/$id');
-      var response = await http.get(url);
+      var response = await http.get(url,
+          headers: <String, String>{'Authorization': 'Bearer $token'});
 
       if (response.statusCode == 200) {
         var body = utf8.decode(response.bodyBytes);
@@ -46,13 +48,14 @@ class UserServices {
     }
   }
 
-  Future<void> updateUser(UserModel user) async {
+  Future<void> updateUser(UserModel user, String token) async {
     try {
       var url = Uri.parse(
           'http://$urlLocal:8080/paddlehub/user-management/v1/users/${user.id}');
       var response = await http.put(url,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer $token'
           },
           body: jsonEncode(user.toJson()));
 

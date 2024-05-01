@@ -24,7 +24,6 @@ class AuthService {
       if (response.statusCode == 200) {
         var body = utf8.decode(response.bodyBytes);
         var data = TokenDataModel.fromJson(jsonDecode(body));
-        ;
         return data;
       } else {
         throw Exception('Failed to get authentification token');

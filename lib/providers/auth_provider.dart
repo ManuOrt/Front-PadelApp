@@ -17,8 +17,9 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  getAuthToken(String username, String password) async {
+  Future<TokenDataModel?> getAuthToken(String username, String password) async {
     _tokenDataModel = await _authService.getAuthToken(username, password);
+    return _tokenDataModel;
   }
 
   getRefreshToken(String refreshToken) async {
@@ -38,5 +39,9 @@ class AuthProvider extends ChangeNotifier {
         }
       }
     }
+  }
+
+  String decodeToken() {
+    return JwtDecoder.decode(_tokenDataModel!.accessToken!)['sub'];
   }
 }

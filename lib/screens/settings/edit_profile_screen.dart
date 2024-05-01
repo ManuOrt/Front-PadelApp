@@ -19,7 +19,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController? name;
   TextEditingController? surname;
   TextEditingController? email;
-  TextEditingController? password;
   TextEditingController? userImg;
   TextEditingController? phoneNumber;
   TextEditingController? gender;
@@ -33,7 +32,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       name = TextEditingController(text: user?.name ?? '');
       surname = TextEditingController(text: user?.surname ?? '');
       email = TextEditingController(text: user?.email ?? '');
-      password = TextEditingController(text: user?.password ?? '');
       userImg = TextEditingController(text: user?.userImg ?? '');
       phoneNumber = TextEditingController(text: user?.phoneNumber ?? '');
       gender = TextEditingController(text: user?.gender ?? '');
@@ -79,12 +77,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: Image.asset(
-                    'assets/img/default-image.jpg',
-                    width: size.width * 0.2,
-                    height: size.height * 0.1,
-                    fit: BoxFit.cover,
-                  ),
+                  child: userImg!.text.isNotEmpty
+                      ? Image.network(
+                          userImg!.text,
+                          width: size.width * 0.2,
+                          height: size.height * 0.1,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset('assets/img/default-image.jpg',
+                          width: size.width * 0.2,
+                          height: size.height * 0.1,
+                          fit: BoxFit.cover),
                 ),
                 SizedBox(height: size.height * 0.01),
                 ElevatedButton(
@@ -217,37 +220,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               },
             ),
             SizedBox(height: size.height * 0.01),
-            PasswordTextFieldWidget(
-              labelText: 'Contraseña',
-              authProvider: Provider.of<AuthProvider>(context),
-              withSize: size.width * 0.87,
-              controller: password!,
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: AppColors.primary,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              focusBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: AppColors.primary,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              hintStyle: const TextStyle(
-                color: AppColors.primary,
-              ),
-              labelStyle: const TextStyle(
-                color: AppColors.primary,
-              ),
-              validator: (String? value) {
-                if (value!.isEmpty) {
-                  return 'El campo no puede estar vacío';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: size.height * 0.01),
             SizedBox(
               width: size.width * 0.87,
               child: Row(
@@ -327,10 +299,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     id: int.parse(id!.text),
                     name: name!.text,
                     email: email!.text,
-                    password: password!.text,
                     userImg: userImg!.text,
                   );
-                  usersProvider.updateUser(updatedUser);
+                  usersProvider.updateUser(updatedUser,
+                      Provider.of<AuthProvider>(context).getToken()!);
                   Navigator.pop(context, 'profile');
                 }
               },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front_end_padelapp/models/models.dart';
 import 'package:front_end_padelapp/providers/providers.dart';
 import 'package:front_end_padelapp/screens/auth/auth_screens_model.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
@@ -16,6 +17,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    final UsersProvider usersProvider = Provider.of<UsersProvider>(context);
     return AuthScreensModel(
       child: Stack(
         children: [
@@ -99,9 +101,10 @@ class LoginScreen extends StatelessWidget {
                       height: 50,
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          if (checkUserData(usernameController.text,
+                        onPressed: () async {
+                          if (await checkUserData(usernameController.text,
                               passwordController.text, authProvider)) {
+                            await buildUserObject(authProvider, usersProvider);
                             Navigator.pushNamed(context, 'home');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -157,12 +160,17 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  bool checkUserData(
-      String username, String password, AuthProvider authProvider) {
-    authProvider.getAuthToken(username, password);
+  Future<bool> checkUserData(
+      String username, String password, AuthProvider authProvider) async {
+    TokenDataModel? token = await authProvider.getAuthToken(username, password);
+    return token?.accessToken != null;
+  }
 
-    String token = authProvider.getToken()!;
-
-    return token.isNotEmpty;
+  buildUserObject(
+      AuthProvider authProvider, UsersProvider usersProvider) async {
+    final String id = authProvider.decodeToken();
+    final UserModel user =
+        await usersProvider.getUserById(id, authProvider.getToken()!);
+    usersProvider.setCurrentUser(user);
   }
 }
