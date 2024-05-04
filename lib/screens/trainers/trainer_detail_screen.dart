@@ -3,7 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:front_end_padelapp/models/models.dart';
 import 'package:front_end_padelapp/providers/auth_provider.dart';
 import 'package:front_end_padelapp/providers/trainers_provider.dart';
-import 'package:front_end_padelapp/screens/home/home_screen.dart';
+import 'package:front_end_padelapp/screens/availability/availability_calendar.dart';
 import 'package:front_end_padelapp/services/location_service.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/widgets/widgets.dart';
@@ -334,7 +334,8 @@ class TrainerDetailScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) =>
+                  const AvailabilityCalendar(),
             ),
           );
         },

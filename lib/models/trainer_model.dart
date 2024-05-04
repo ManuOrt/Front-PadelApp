@@ -22,7 +22,7 @@ class TrainerModel {
   factory TrainerModel.fromJson(Map<String, dynamic> json) => TrainerModel(
         id: json["id"],
         userId: json["user_id"],
-        description: json["description"],
+        description: json["description  "],
         location: json["location"],
         rangeLocation: json["range_location"],
         categories: json["categories"] == null
