@@ -2,24 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 
 class TextFieldWidget extends StatelessWidget {
-  final String? text;
+  final String? hintText;
+  final String? labelText;
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final Icon? prefixIcon;
   final Icon? suffixIcon;
-  final TextStyle? style;
+  final TextStyle? hintStyle;
+  final TextStyle? labelStyle;
+  final InputBorder? focusBorder;
   final OutlineInputBorder? border;
   final double withSize;
 
   const TextFieldWidget({
     Key? key,
-    this.text,
+    this.hintText,
+    this.labelText,
     required this.controller,
     required this.validator,
     this.prefixIcon,
     this.suffixIcon,
-    this.style,
+    this.hintStyle,
+    this.labelStyle,
     this.border,
+    this.focusBorder,
     required this.withSize,
   }) : super(key: key);
 
@@ -33,17 +39,19 @@ class TextFieldWidget extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: validator,
         decoration: InputDecoration(
-          hintText: text,
-          filled: true,
-          hintStyle: style,
-          border: border,
-          fillColor: AppColors.primaryWhite,
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
+            labelText: labelText,
+            labelStyle: labelStyle,
+            hintText: hintText,
+            filled: true,
+            hintStyle: hintStyle,
+            border: border,
+            fillColor: AppColors.primaryWhite,
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: focusBorder),
       ),
     );
   }

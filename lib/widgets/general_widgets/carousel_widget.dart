@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/models/models.dart';
+import 'package:front_end_padelapp/providers/auth_provider.dart';
 import 'package:front_end_padelapp/services/trainer_service.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/utils/get_valoration.dart';
+import 'package:provider/provider.dart';
 
 class CarouselWidget extends StatelessWidget {
   const CarouselWidget({
@@ -16,15 +18,16 @@ class CarouselWidget extends StatelessWidget {
   final Size size;
   final Function(int, TrainerDetailModel, double) onTrainerSelected;
 
-  Future<double> getAverageRating(int trainerId) async {
+  Future<double> getAverageRating(int trainerId, String token) async {
     TrainerDetailModel trainerDetails =
-        await TrainerServices().getTrainerOpinions(trainerId);
+        await TrainerServices().getTrainerOpinions(trainerId, token);
     return calculateAverageRating(trainerDetails.opinions);
   }
 
-  Future<Map<String, dynamic>> getRatingAndCount(int trainerId) async {
+  Future<Map<String, dynamic>> getRatingAndCount(
+      int trainerId, String token) async {
     TrainerDetailModel trainerDetails =
-        await TrainerServices().getTrainerOpinions(trainerId);
+        await TrainerServices().getTrainerOpinions(trainerId, token);
     double averageRating = calculateAverageRating(trainerDetails.opinions);
     int count = trainerDetails.opinions.length;
     return {'averageRating': averageRating, 'count': count};
@@ -32,6 +35,7 @@ class CarouselWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return SizedBox(
       width: double.infinity,
       height: size.height * 0.4,
@@ -43,7 +47,10 @@ class CarouselWidget extends StatelessWidget {
             onTap: () async {
               int trainerId = items[index].id!;
               TrainerDetailModel trainerDetails =
-                  await TrainerServices().getTrainerOpinions(trainerId);
+                  await TrainerServices().getTrainerOpinions(
+                trainerId,
+                authProvider.getToken()!,
+              );
               double averageRating =
                   calculateAverageRating(trainerDetails.opinions);
               onTrainerSelected(trainerId, trainerDetails, averageRating);
@@ -127,7 +134,8 @@ class CarouselWidget extends StatelessWidget {
                               ),
                               SizedBox(height: size.height * 0.01),
                               FutureBuilder<Map<String, dynamic>>(
-                                future: getRatingAndCount(items[index].id!),
+                                future: getRatingAndCount(
+                                    items[index].id!, authProvider.getToken()!),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {

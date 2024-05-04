@@ -77,7 +77,7 @@ class HeaderScreen extends StatelessWidget implements PreferredSizeWidget {
                 );
               }
             },
-            child: user != null
+            child: user != null && user.userImg != null
                 ? ClipRRect(
                     borderRadius: BorderRadius.circular(100),
                     child: Image.network(

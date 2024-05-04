@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front_end_padelapp/models/user_model.dart';
 import 'package:front_end_padelapp/routes/routes.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:provider/provider.dart';
@@ -12,12 +11,6 @@ void main() async {
   AuthProvider authProvider = AuthProvider();
   UsersProvider usersProvider = UsersProvider();
   TrainersProvider trainersProvider = TrainersProvider();
-
-  int userId = 1;
-
-  UserModel user = await usersProvider.getUserById(userId);
-
-  usersProvider.setCurrentUser(user);
 
   runApp(
     MultiProvider(
@@ -57,6 +50,10 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: AppColors.primary,
+            selectionColor: AppColors.primary,
+            selectionHandleColor: AppColors.primary),
       ),
     );
   }

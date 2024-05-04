@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:front_end_padelapp/models/models.dart';
+import 'package:front_end_padelapp/providers/auth_provider.dart';
 import 'package:front_end_padelapp/providers/trainers_provider.dart';
 import 'package:front_end_padelapp/screens/home/home_screen.dart';
 import 'package:front_end_padelapp/services/location_service.dart';
@@ -9,6 +10,7 @@ import 'package:front_end_padelapp/widgets/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import '../../utils/get_valoration.dart';
 
 class TrainerDetailScreen extends StatelessWidget {
@@ -285,7 +287,8 @@ class TrainerDetailScreen extends StatelessWidget {
                   FutureBuilder(
                     future:
                         Provider.of<TrainersProvider>(context, listen: false)
-                            .getTrainers(),
+                            .getTrainers(
+                                Provider.of<AuthProvider>(context).getToken()!),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<TrainerModel>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -331,8 +334,7 @@ class TrainerDetailScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  const HomeScreen(),
+              builder: (context) => const HomeScreen(),
             ),
           );
         },

@@ -5,20 +5,26 @@ import 'package:front_end_padelapp/utils/app_colors.dart';
 class PasswordTextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final double withSize;
-  final TextStyle? style;
+  final TextStyle? hintStyle;
+  final TextStyle? labelStyle;
   final OutlineInputBorder? border;
+  final InputBorder? focusBorder;
   final AuthProvider authProvider;
-  final String? text;
+  final String? hintText;
+  final String? labelText;
   final String? Function(String?)? validator;
 
   const PasswordTextFieldWidget(
       {super.key,
       required this.controller,
       required this.withSize,
-      this.style,
+      this.hintStyle,
+      this.labelStyle,
       this.border,
+      this.focusBorder,
       required this.authProvider,
-      this.text,
+      this.hintText,
+      this.labelText,
       this.validator});
 
   @override
@@ -31,9 +37,12 @@ class PasswordTextFieldWidget extends StatelessWidget {
         controller: controller,
         obscureText: authProvider.password,
         decoration: InputDecoration(
-          hintText: text,
-          hintStyle: style,
+          labelText: labelText,
+          labelStyle: labelStyle,
+          hintText: hintText,
+          hintStyle: hintStyle,
           border: border,
+          focusedBorder: focusBorder,
           suffixIcon: IconButton(
             icon: Icon(
               authProvider.password
