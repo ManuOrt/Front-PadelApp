@@ -14,11 +14,12 @@ class TrainerServices {
   DateTime now = DateTime.now();
   DateFormat formatter = DateFormat('yyyy-MM-dd');
 
-  Future<List<TrainerModel>> getTrainersData() async {
+  Future<List<TrainerModel>> getTrainersData(String token) async {
     try {
       var url = Uri.parse(
           'http://$urlLocal:8080/paddlehub/user-management/v1/trainers');
-      var response = await http.get(url);
+      var response = await http.get(url,
+          headers: <String, String>{'Authorization': 'Bearer $token'});
 
       if (response.statusCode == 200) {
         var body = utf8.decode(response.bodyBytes);
@@ -27,7 +28,8 @@ class TrainerServices {
             data.map((trainer) => TrainerModel.fromJson(trainer)).toList();
 
         for (var trainer in trainers) {
-          UserModel user = await userServices.getUserById(trainer.userId!);
+          UserModel user =
+              await userServices.getUserById(trainer.userId!.toString(), token);
           trainer.user = user;
         }
 
@@ -40,16 +42,18 @@ class TrainerServices {
     }
   }
 
-  Future<TrainerModel> getTrainerById(int trainerId) async {
+  Future<TrainerModel> getTrainerById(int trainerId, String token) async {
     try {
       var url = Uri.parse(
           'http://$urlLocal:8080/paddlehub/user-management/v1/trainers/$trainerId');
-      var response = await http.get(url);
+      var response = await http.get(url,
+          headers: <String, String>{'Authorization': 'Bearer $token'});
       if (response.statusCode == 200) {
         var body = utf8.decode(response.bodyBytes);
         var data = jsonDecode(body);
         TrainerModel trainer = TrainerModel.fromJson(data);
-        UserModel user = await userServices.getUserById(trainer.userId!);
+        UserModel user =
+            await userServices.getUserById(trainer.userId!.toString(), token);
         trainer.user = user;
         return trainer;
       } else {
@@ -60,20 +64,24 @@ class TrainerServices {
     }
   }
 
-  Future<TrainerDetailModel> getTrainerOpinions(int trainerId) async {
+  Future<TrainerDetailModel> getTrainerOpinions(
+      int trainerId, String token) async {
     try {
-      TrainerModel trainer = await getTrainerById(trainerId);
+      TrainerModel trainer = await getTrainerById(trainerId, token);
 
       var opinionsUrl = Uri.parse(
-          'http://$urlLocal:8080/paddlehub/trainer-opinion/v1/trainers/$trainerId/opinions');
-      var opinionsResponse = await http.get(opinionsUrl);
+        'http://$urlLocal:8080/paddlehub/trainer-opinion/v1/trainers/$trainerId/opinions',
+      );
+      var opinionsResponse = await http.get(opinionsUrl,
+          headers: <String, String>{'Authorization': 'Bearer $token'});
       if (opinionsResponse.statusCode == 200) {
         var opinionsBody = utf8.decode(opinionsResponse.bodyBytes);
         var opinionsData = jsonDecode(opinionsBody) as List;
         List<OpinionModel> opinions = [];
         for (var opinionData in opinionsData) {
           OpinionModel opinion = OpinionModel.fromJson(opinionData);
-          UserModel user = await userServices.getUserById(opinion.userId!);
+          UserModel user =
+              await userServices.getUserById(opinion.userId!.toString(), token);
           opinion.userName = user.name;
           opinion.userImg = user.userImg;
           opinion.surname = user.surname;
@@ -93,7 +101,8 @@ class TrainerServices {
     }
   }
 
-  Future<TrainerAvailability> getTrainerAvailability(int trainerId) async {
+  Future<TrainerAvailability> getTrainerAvailability(
+      int trainerId, String token) async {
     try {
       String startDate = formatter.format(now);
       String endDate =
@@ -101,7 +110,8 @@ class TrainerServices {
 
       var url = Uri.parse(
           'http://$urlLocal:8080/paddlehub/availability/v1/availabilities?start_date=$startDate&finish_date=$endDate&trainer_id=$trainerId');
-      var response = await http.get(url);
+      var response = await http.get(url,
+          headers: <String, String>{'Authorization': 'Bearer $token'});
 
       if (response.statusCode == 200) {
         var body = utf8.decode(response.bodyBytes);

@@ -16,9 +16,11 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController? id;
   TextEditingController? name;
+  TextEditingController? surname;
   TextEditingController? email;
-  TextEditingController? password;
   TextEditingController? userImg;
+  TextEditingController? phoneNumber;
+  TextEditingController? gender;
 
   @override
   void didChangeDependencies() {
@@ -27,9 +29,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       final UserModel? user = Provider.of<UsersProvider>(context).user;
       id = TextEditingController(text: user?.id.toString() ?? '');
       name = TextEditingController(text: user?.name ?? '');
+      surname = TextEditingController(text: user?.surname ?? '');
       email = TextEditingController(text: user?.email ?? '');
-      password = TextEditingController(text: user?.password ?? '');
       userImg = TextEditingController(text: user?.userImg ?? '');
+      phoneNumber = TextEditingController(text: user?.phoneNumber ?? '');
+      gender = TextEditingController(text: user?.gender ?? '');
     }
   }
 
@@ -38,166 +42,195 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: const HeaderScreen(),
+      appBar: AppBar(
+        title: const Text(
+          'Editar perfil',
+          style: TextStyle(color: AppColors.primaryWhite),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context, 'profile'),
+        ),
+        backgroundColor: AppColors.primary,
+      ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                  left: size.width * 0.04, top: size.height * 0.02),
-              child: Row(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Column(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context, 'profile');
-                    },
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: AppColors.primary,
-                    ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: userImg!.text.isNotEmpty
+                        ? Image.network(
+                            userImg!.text,
+                            width: size.width * 0.2,
+                            height: size.height * 0.1,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset('assets/img/default-image.jpg',
+                            width: size.width * 0.2,
+                            height: size.height * 0.1,
+                            fit: BoxFit.cover),
                   ),
-                  SizedBox(width: size.width * 0.04),
-                  const Text(
-                    'Editar perfil',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary),
+                  SizedBox(height: size.height * 0.01),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      side:
+                          const BorderSide(color: AppColors.primary, width: 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: AppColors.primaryWhite,
+                    ),
+                    child: const Text(
+                      'Cambiar foto de perfil',
+                      style: TextStyle(color: AppColors.primary),
+                    ),
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: size.height * 0.02),
-            Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.network(
-                    userImg!.text,
-                    width: size.width * 0.5,
-                    height: size.height * 0.25,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(height: size.height * 0.01),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    side: const BorderSide(color: AppColors.primary, width: 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+              const Divider(
+                color: AppColors.primary,
+              ),
+              Row(
+                children: [
+                  const Text('Nombre',
+                      style: TextStyle(color: AppColors.primary)),
+                  SizedBox(width: size.width * 0.03),
+                  Expanded(
+                    child: TextFieldWidget(
+                      withSize: size.width * 0.4,
+                      controller: name!,
+                      hintStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      labelStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.edit,
+                        color: AppColors.primaryGray,
+                      ),
+                      focusBorder: InputBorder.none,
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'El campo no puede estar vacío';
+                        }
+                        return null;
+                      },
                     ),
-                    backgroundColor: AppColors.primaryWhite,
                   ),
-                  child: const Text(
-                    'Cambiar foto de perfil',
+                ],
+              ),
+              const Divider(
+                color: AppColors.primary,
+              ),
+              Row(
+                children: [
+                  const Text(
+                    'Username',
                     style: TextStyle(color: AppColors.primary),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: size.height * 0.02),
-            TextFieldWidget(
-              withSize: size.width * 0.87,
-              controller: name!,
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Color.fromARGB(255, 126, 148, 163),
-                ),
-                borderRadius: BorderRadius.circular(10),
+                  SizedBox(width: size.width * 0.03),
+                  Expanded(
+                    child: TextFieldWidget(
+                      withSize: size.width * 0.87,
+                      controller: surname!,
+                      focusBorder: InputBorder.none,
+                      hintStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      labelStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.edit,
+                        color: AppColors.primaryGray,
+                      ),
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'El campo no puede estar vacío';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
               ),
-              style: const TextStyle(
+              const Divider(
                 color: AppColors.primary,
               ),
-              suffixIcon: const Icon(
-                Icons.edit,
-                color: AppColors.primaryGray,
-              ),
-              validator: (String? value) {
-                if (value!.isEmpty) {
-                  return 'El campo no puede estar vacío';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: size.height * 0.01),
-            TextFieldWidget(
-              withSize: size.width * 0.87,
-              controller: email!,
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: AppColors.primary,
+              SizedBox(
+                width: size.width * 0.87,
+                child: Row(
+                  children: [
+                    const Text(
+                      'Teléfono',
+                      style: TextStyle(color: AppColors.primary),
+                    ),
+                    SizedBox(width: size.width * 0.03),
+                    Expanded(
+                      child: TextFieldWidget(
+                        withSize: size.width * 0.87,
+                        controller: phoneNumber!,
+                        suffixIcon: const Icon(
+                          Icons.edit,
+                          color: AppColors.primaryGray,
+                        ),
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'El campo no puede estar vacío';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                borderRadius: BorderRadius.circular(10),
               ),
-              style: const TextStyle(
+              const Divider(
                 color: AppColors.primary,
               ),
-              suffixIcon: const Icon(
-                Icons.edit,
-                color: AppColors.primaryGray,
-              ),
-              validator: (String? value) {
-                if (value!.isEmpty) {
-                  return 'El campo no puede estar vacío';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: size.height * 0.01),
-            PasswordTextFieldWidget(
-              authProvider: Provider.of<AuthProvider>(context),
-              withSize: size.width * 0.87,
-              controller: password!,
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: AppColors.primary,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              style: const TextStyle(
-                color: AppColors.primary,
-              ),
-              validator: (String? value) {
-                if (value!.isEmpty) {
-                  return 'El campo no puede estar vacío';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: size.height * 0.02),
-            ElevatedButton(
-              onPressed: () {
-                final UsersProvider usersProvider =
-                    Provider.of<UsersProvider>(context, listen: false);
-                final UserModel? currentUser = usersProvider.user;
+              ElevatedButton(
+                onPressed: () {
+                  final UsersProvider usersProvider =
+                      Provider.of<UsersProvider>(context, listen: false);
+                  final UserModel? currentUser = usersProvider.user;
 
-                if (currentUser != null) {
-                  final updatedUser = currentUser.copyWith(
-                    id: int.parse(id!.text),
-                    name: name!.text,
-                    email: email!.text,
-                    password: password!.text,
-                    userImg: userImg!.text,
-                  );
-                  usersProvider.updateUser(updatedUser);
-                  Navigator.pop(context, 'profile');
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  if (currentUser != null) {
+                    final updatedUser = currentUser.copyWith(
+                      id: int.parse(id!.text),
+                      name: name!.text,
+                      email: email!.text,
+                      userImg: userImg!.text,
+                    );
+                    usersProvider.updateUser(updatedUser,
+                        Provider.of<AuthProvider>(context).getToken()!);
+                    Navigator.pop(context, 'profile');
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  'Guardar cambios',
+                  style: TextStyle(
+                    color: AppColors.primaryWhite,
+                  ),
                 ),
               ),
-              child: const Text(
-                'Guardar cambios',
-                style: TextStyle(
-                  color: AppColors.primaryWhite,
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
+      ),
+      bottomNavigationBar: FooterWidget(
+        size: size,
       ),
     );
   }
