@@ -41,6 +41,8 @@ dependencies:
   geolocator: ^11.0.0
   google_maps_flutter: ^2.5.3
   geocoding: ^3.0.0
+  calendar_date_picker2: ^0.5.5
+  syncfusion_flutter_datepicker: ^21.2.3
 
 dev_dependencies:
   flutter_lints: ^2.0.0
