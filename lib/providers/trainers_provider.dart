@@ -4,9 +4,10 @@ import 'package:front_end_padelapp/services/trainer_service.dart';
 
 class TrainersProvider extends ChangeNotifier {
   List<TrainerModel> trainers = [];
+  final TrainerServices _trainerServices = TrainerServices();
 
   Future<List<TrainerModel>> getTrainers(String token) async {
-    trainers = await TrainerServices().getTrainersData(token);
+    trainers = await _trainerServices.getTrainersData(token);
     notifyListeners();
     return trainers;
   }
@@ -14,7 +15,7 @@ class TrainersProvider extends ChangeNotifier {
   Future<TrainerDetailModel> getTrainerDetails(
       TrainerModel trainer, String token) async {
     TrainerDetailModel trainerDetails =
-        await TrainerServices().getTrainerOpinions(trainer.id!, token);
+        await _trainerServices.getTrainerOpinions(trainer.id!, token);
     notifyListeners();
     return trainerDetails;
   }

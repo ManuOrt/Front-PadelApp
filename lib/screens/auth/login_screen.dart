@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front_end_padelapp/models/models.dart';
 import 'package:front_end_padelapp/providers/providers.dart';
 import 'package:front_end_padelapp/screens/auth/auth_screens_model.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
@@ -102,9 +101,12 @@ class LoginScreen extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                          if (await checkUserData(usernameController.text,
-                              passwordController.text, authProvider)) {
-                            await buildUserObject(authProvider, usersProvider);
+                          bool success = await authProvider.login(
+                            usernameController.text,
+                            passwordController.text,
+                            usersProvider,
+                          );
+                          if (success) {
                             Navigator.pushNamed(context, 'home');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -158,19 +160,5 @@ class LoginScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Future<bool> checkUserData(
-      String username, String password, AuthProvider authProvider) async {
-    TokenDataModel? token = await authProvider.getAuthToken(username, password);
-    return token?.accessToken != null;
-  }
-
-  buildUserObject(
-      AuthProvider authProvider, UsersProvider usersProvider) async {
-    final String id = authProvider.decodeToken();
-    final UserModel user =
-        await usersProvider.getUserById(id, authProvider.getToken()!);
-    usersProvider.setCurrentUser(user);
   }
 }

@@ -86,8 +86,8 @@ class HomeScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(100),
                                 child: Image.network(
                                   user.userImg!,
-                                  width: size.width * 0.2,
-                                  height: size.height * 0.1,
+                                  width: size.width * 0.1,
+                                  height: size.height * 0.05,
                                   fit: BoxFit.cover,
                                 ))
                             : const Icon(
