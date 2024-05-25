@@ -33,11 +33,30 @@ class RecoveryPasswordScreen extends StatelessWidget {
                     padding: EdgeInsets.all(size.width * 0.02),
                     child: TextFieldWidget(
                       withSize: size.width * 0.87,
-                      prefixIcon: const Icon(Icons.email),
                       controller: recoverPasswordController,
                       hintText: 'Email',
-                      validator: (value) =>
-                          value!.isEmpty ? 'Campo vacío' : null,
+                      focusBorder: InputBorder.none,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      keyboardType: TextInputType.text,
+                      hintStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      labelStyle: const TextStyle(
+                        color: AppColors.primary,
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.edit,
+                        color: AppColors.primaryGray,
+                      ),
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return 'El campo no puede estar vacío';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   Padding(

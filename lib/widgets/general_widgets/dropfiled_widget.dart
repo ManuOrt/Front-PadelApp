@@ -9,27 +9,31 @@ class DropFieldWidget extends StatelessWidget {
   final String? dropdownValue;
   final String? labelText;
   final TextStyle? labelStyle;
-  final OutlineInputBorder? border;
+  final InputBorder? border;
   final InputBorder? focusBorder;
   final double withSize;
+  final double heightSize;
 
-  const DropFieldWidget(
-      {super.key,
-      this.switchWidget,
-      required this.labelText,
-      this.icon,
-      required this.items,
-      this.onChanged,
-      required this.border,
-      required this.focusBorder,
-      this.dropdownValue,
-      required this.withSize,
-      this.labelStyle});
+  const DropFieldWidget({
+    super.key,
+    this.switchWidget,
+    this.labelText,
+    this.icon,
+    required this.items,
+    this.onChanged,
+    this.border,
+    this.focusBorder,
+    this.dropdownValue,
+    required this.withSize,
+    required this.heightSize,
+    this.labelStyle,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: withSize,
+      height: heightSize,
       child: DropdownButtonFormField<String>(
           value: dropdownValue,
           icon: icon,
@@ -47,7 +51,11 @@ class DropFieldWidget extends StatelessWidget {
           items: items!.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Text(
+                value,
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.normal),
+              ),
             );
           }).toList()),
     );

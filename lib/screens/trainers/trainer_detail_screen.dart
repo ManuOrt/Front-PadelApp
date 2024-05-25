@@ -285,10 +285,10 @@ class TrainerDetailScreen extends StatelessWidget {
                   ),
                   SizedBox(height: size.height * 0.02),
                   FutureBuilder(
-                    future:
-                        Provider.of<TrainersProvider>(context, listen: false)
-                            .getTrainers(
-                                Provider.of<AuthProvider>(context).getToken()!),
+                    future: Provider.of<TrainersProvider>(context,
+                            listen: false)
+                        .getTrainers(
+                            Provider.of<AuthProvider>(context).getToken()!, ''),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<TrainerModel>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {

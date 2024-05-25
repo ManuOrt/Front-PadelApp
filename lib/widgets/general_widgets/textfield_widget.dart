@@ -11,7 +11,8 @@ class TextFieldWidget extends StatelessWidget {
   final TextStyle? hintStyle;
   final TextStyle? labelStyle;
   final InputBorder? focusBorder;
-  final OutlineInputBorder? border;
+  final InputBorder? border;
+  final TextInputType keyboardType;
   final double withSize;
 
   const TextFieldWidget({
@@ -26,6 +27,7 @@ class TextFieldWidget extends StatelessWidget {
     this.labelStyle,
     this.border,
     this.focusBorder,
+    required this.keyboardType,
     required this.withSize,
   }) : super(key: key);
 
@@ -34,24 +36,25 @@ class TextFieldWidget extends StatelessWidget {
     return SizedBox(
       width: withSize,
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: keyboardType,
         controller: controller,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: validator,
         decoration: InputDecoration(
-            labelText: labelText,
-            labelStyle: labelStyle,
-            hintText: hintText,
-            filled: true,
-            hintStyle: hintStyle,
-            border: border,
-            fillColor: AppColors.primaryWhite,
-            prefixIcon: prefixIcon,
-            suffixIcon: suffixIcon,
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusedBorder: focusBorder),
+          labelText: labelText,
+          labelStyle: labelStyle,
+          hintText: hintText,
+          filled: true,
+          hintStyle: hintStyle,
+          border: border,
+          fillColor: AppColors.primaryWhite,
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: focusBorder,
+        ),
       ),
     );
   }

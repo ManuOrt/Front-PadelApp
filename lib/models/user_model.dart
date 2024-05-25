@@ -44,7 +44,7 @@ class UserModel {
         username: json["username"],
         dateOfBirth: json["date_of_birth"] != null
             ? DateTime.parse(json["date_of_birth"])
-            : null,
+            : DateTime.now(),
         emailVerified: json["email_verified"],
         createDate: json["create_date"] != null
             ? DateTime.parse(json["create_date"])

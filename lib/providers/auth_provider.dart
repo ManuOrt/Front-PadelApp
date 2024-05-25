@@ -46,11 +46,11 @@ class AuthProvider extends ChangeNotifier {
     return JwtDecoder.decode(_tokenDataModel!.accessToken!)['sub'];
   }
 
-  Future<bool> login(
-      String username, String password, UsersProvider usersProvider) async {
+  Future<bool> login(String username, String password,
+      UsersProvider usersProvider, TrainersProvider trainersProvider) async {
     try {
       if (await checkUserData(username, password, this)) {
-        buildUserObject(this, usersProvider);
+        buildUserObject(this, usersProvider, trainersProvider);
         return true;
       } else {
         return false;
@@ -66,11 +66,18 @@ class AuthProvider extends ChangeNotifier {
     return token?.accessToken != null;
   }
 
-  buildUserObject(
-      AuthProvider authProvider, UsersProvider usersProvider) async {
+  buildUserObject(AuthProvider authProvider, UsersProvider usersProvider,
+      TrainersProvider trainersProvider) async {
     final String id = authProvider.decodeToken();
     final UserModel user =
         await usersProvider.getUserById(id, authProvider.getToken()!);
+
+    if (user.userType == "T") {
+      final List<TrainerModel> trainer = await trainersProvider.getTrainers(
+          authProvider.getToken()!, user.id.toString());
+      trainer.first.user = user;
+      trainersProvider.setTrainer(trainer.first);
+    }
     usersProvider.setCurrentUser(user);
   }
 }
