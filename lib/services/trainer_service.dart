@@ -144,11 +144,9 @@ class TrainerServices {
 
       if (response.statusCode == 200) {
         return;
-      } else {
-        throw Exception('Failed to update trainer');
       }
     } catch (e) {
-      rethrow;
+      throw Exception('Failed to update trainer $e');
     }
   }
 }

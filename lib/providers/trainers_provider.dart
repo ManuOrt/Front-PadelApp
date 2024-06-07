@@ -30,6 +30,7 @@ class TrainersProvider extends ChangeNotifier {
 
   Future<void> updateTrainer(TrainerModel trainer, String token) async {
     await _trainerServices.updateTrainer(trainer, token);
+    this.trainer = trainer;
     notifyListeners();
   }
 

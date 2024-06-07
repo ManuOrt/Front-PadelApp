@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front_end_padelapp/utils/app_colors.dart';
 import 'package:front_end_padelapp/widgets/general_widgets/textfield_widget.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/models.dart';
@@ -16,10 +17,13 @@ class TranierOptionsScreen extends StatefulWidget {
 class _TranierOptionsScreenState extends State<TranierOptionsScreen> {
   TextEditingController? id;
   TextEditingController? titleController;
+  GoogleMapController? locationController;
   List<int?> categories = [];
   TextEditingController? descriptionController;
   bool isSelected = false;
-  final List<bool> selectedCategories = [];
+  List<bool> selectedCategories = [];
+  static const LatLng defaultLocation = LatLng(39.5696, 2.6502);
+  String? locationText;
 
   @override
   void didChangeDependencies() {
@@ -29,7 +33,9 @@ class _TranierOptionsScreenState extends State<TranierOptionsScreen> {
           Provider.of<TrainersProvider>(context).trainer!;
       id = TextEditingController(text: trainer.id.toString());
       titleController = TextEditingController(text: trainer.title);
+      locationText = trainer.location;
       List<int> trainerCategories = trainer.categories!;
+      selectedCategories = List<bool>.filled(5, false);
       for (int category in trainerCategories) {
         selectedCategories[category - 1] = true;
       }
@@ -40,6 +46,8 @@ class _TranierOptionsScreenState extends State<TranierOptionsScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final TrainersProvider trainersProvider =
+        Provider.of<TrainersProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -55,7 +63,8 @@ class _TranierOptionsScreenState extends State<TranierOptionsScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(left: size.width * 0.05),
+          padding: EdgeInsets.only(
+              left: size.width * 0.05, right: size.width * 0.05),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -167,30 +176,74 @@ class _TranierOptionsScreenState extends State<TranierOptionsScreen> {
               SizedBox(
                 height: size.height * 0.03,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  final TrainerModel trainer =
-                      Provider.of<TrainersProvider>(context, listen: false)
-                          .trainer!;
-                  trainer.title = titleController!.text;
-                  trainer.description = descriptionController!.text;
-                  trainer.categories = [];
-                  for (int i = 0; i < 5; i++) {
-                    if (selectedCategories[i]) {
-                      trainer.categories!.add(i + 1);
-                    }
-                  }
-                  Provider.of<TrainersProvider>(context, listen: false)
-                      .updateTrainer(
-                          trainer,
+              const Text(
+                'Ubicación',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              SizedBox(
+                height: size.height * 0.3,
+                child: GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: _locationFromText(locationText!) ?? defaultLocation,
+                    zoom: 15,
+                  ),
+                  onMapCreated: (GoogleMapController controller) {
+                    locationController = controller;
+                  },
+                  markers: {
+                    Marker(
+                      markerId: const MarkerId('1'),
+                      position:
+                          _locationFromText(locationText!) ?? defaultLocation,
+                    ),
+                  },
+                  onTap: (LatLng location) {
+                    setState(() {
+                      locationText =
+                          '${location.latitude},${location.longitude}';
+                    });
+                    locationController!.animateCamera(
+                      CameraUpdate.newLatLng(location),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                height: size.height * 0.03,
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    final TrainerModel? trainer = trainersProvider.trainer;
+                    if (trainer != null) {
+                      final updateTrainer = trainer.copyWith(
+                        title: titleController!.text,
+                        description: descriptionController!.text,
+                        location: locationText,
+                        categories: [
+                          for (int i = 0; i < 5; i++)
+                            if (selectedCategories[i]) i + 1
+                        ],
+                      );
+                      trainersProvider.updateTrainer(
+                          updateTrainer,
                           Provider.of<AuthProvider>(context, listen: false)
                               .getToken()!);
-                  Navigator.pop(context, 'profile');
-                },
-                child: const Text(
-                  'Guardar',
-                  style: TextStyle(
-                    color: AppColors.primaryWhite,
+                      Navigator.pop(context, 'profile');
+                    }
+                  },
+                  child: const Text(
+                    'Guardar',
+                    style: TextStyle(
+                      color: AppColors.primaryWhite,
+                    ),
                   ),
                 ),
               ),
@@ -199,5 +252,14 @@ class _TranierOptionsScreenState extends State<TranierOptionsScreen> {
         ),
       ),
     );
+  }
+
+  LatLng? _locationFromText(String text) {
+    List<String> parts = text.split(',');
+    if (parts.length != 2) return null;
+    double? latitude = double.tryParse(parts[0]);
+    double? longitude = double.tryParse(parts[1]);
+    if (latitude == null || longitude == null) return null;
+    return LatLng(latitude, longitude);
   }
 }
