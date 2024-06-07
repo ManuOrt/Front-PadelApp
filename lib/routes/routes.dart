@@ -11,4 +11,5 @@ var customRoutes = <String, WidgetBuilder>{
   'options': (context) => const OptionsScreen(),
   'profile': (context) => const ProfileScreen(),
   'edit_profile': (context) => const EditProfileScreen(),
+  'trainer_options': (context) => const TranierOptionsScreen(),
 };

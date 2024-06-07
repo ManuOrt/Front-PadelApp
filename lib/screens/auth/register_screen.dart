@@ -42,6 +42,7 @@ class RegisterScreen extends StatelessWidget {
                       withSize: size.width * 0.87,
                       hintText: 'Usuario',
                       controller: userController,
+                      keyboardType: TextInputType.text,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(8),
@@ -62,6 +63,7 @@ class RegisterScreen extends StatelessWidget {
                       withSize: size.width * 0.87,
                       hintText: 'Correo Electrónico',
                       controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(8),
@@ -71,7 +73,7 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       validator: (value) => value!.length < 6
                           ? 'Introduce un mínimo de 6 caracteres'
-                          : null,
+                          : null, //TODO: Add email vaildation with regex or something
                       prefixIcon: const Icon(
                         Icons.email,
                         color: AppColors.primaryGray,
@@ -93,7 +95,7 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       validator: (valor) => valor != null && valor.length < 6
                           ? 'Contraseña poco segura'
-                          : null,
+                          : null, //TODO Add correct verification instead this one.
                     ),
                     SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
@@ -117,7 +119,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.02),
                     SizedBox(
-                      height: 50,
+                      height: size.height * 0.06,
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {},

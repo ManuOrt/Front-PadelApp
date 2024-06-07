@@ -23,7 +23,9 @@ class HeaderScreen extends StatelessWidget implements PreferredSizeWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              ),
             );
           },
           child: Image.asset(
@@ -68,8 +70,8 @@ class HeaderScreen extends StatelessWidget implements PreferredSizeWidget {
                       ),
                       alignment: Alignment.topCenter,
                       child: SizedBox(
-                        width: size.width * 0.8,
-                        height: size.height * 0.5,
+                        width: size.width * 0.9,
+                        height: size.height * 0.6,
                         child: const UserActionsModal(),
                       ),
                     );
@@ -82,8 +84,8 @@ class HeaderScreen extends StatelessWidget implements PreferredSizeWidget {
                     borderRadius: BorderRadius.circular(100),
                     child: Image.network(
                       user.userImg ?? const Icon(Icons.person).toString(),
-                      width: size.width * 0.08,
-                      height: size.height * 0.05,
+                      width: size.width * 0.09,
+                      height: size.height * 0.06,
                       fit: BoxFit.cover,
                     ),
                   )

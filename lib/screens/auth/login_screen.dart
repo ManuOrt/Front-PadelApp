@@ -17,11 +17,11 @@ class LoginScreen extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final AuthProvider authProvider = Provider.of<AuthProvider>(context);
     final UsersProvider usersProvider = Provider.of<UsersProvider>(context);
+    final TrainersProvider trainersProvider =
+        Provider.of<TrainersProvider>(context);
     return AuthScreensModel(
       child: Stack(
         children: [
-          const BackButtonWidget(
-              opacity: 0.3, iconColor: AppColors.primaryWhite),
           Align(
             alignment: Alignment.center,
             child: SingleChildScrollView(
@@ -40,6 +40,8 @@ class LoginScreen extends StatelessWidget {
                     TextFieldWidget(
                       hintText: 'Username',
                       controller: usernameController,
+                      keyboardType: TextInputType.text,
+                      withSize: size.width * 0.87,
                       validator: (value) => value!.isEmpty
                           ? 'Campo vacio'
                           : null, //TODO: Add email vaildation with regex or something
@@ -54,7 +56,6 @@ class LoginScreen extends StatelessWidget {
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      withSize: size.width * 0.87,
                     ),
                     SizedBox(height: size.height * 0.015),
                     PasswordTextFieldWidget(
@@ -69,9 +70,9 @@ class LoginScreen extends StatelessWidget {
                       hintStyle: const TextStyle(
                         color: AppColors.primaryGray,
                       ),
-                      validator: (valor) => valor != null && valor.length < 1
+                      validator: (valor) => valor != null && valor.isEmpty
                           ? 'Contraseña poco segura'
-                          : null,
+                          : null, //TODO Add correct verification instead this one.
                     ),
                     SizedBox(height: size.height * 0.02),
                     Row(
@@ -97,7 +98,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.03),
                     SizedBox(
-                      height: 50,
+                      height: size.height * 0.06,
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
@@ -105,6 +106,7 @@ class LoginScreen extends StatelessWidget {
                             usernameController.text,
                             passwordController.text,
                             usersProvider,
+                            trainersProvider,
                           );
                           if (success) {
                             Navigator.pushNamed(context, 'home');

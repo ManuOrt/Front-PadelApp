@@ -14,10 +14,14 @@ class TrainerServices {
   DateTime now = DateTime.now();
   DateFormat formatter = DateFormat('yyyy-MM-dd');
 
-  Future<List<TrainerModel>> getTrainersData(String token) async {
+  Future<List<TrainerModel>> getTrainersData(
+    String token,
+    String? userId,
+  ) async {
     try {
       var url = Uri.parse(
-          'http://$urlLocal:8080/paddlehub/user-management/v1/trainers');
+        'http://$urlLocal:8080/paddlehub/user-management/v1/trainers${userId != null ? '?user_id=$userId' : ''}',
+      );
       var response = await http.get(url,
           headers: <String, String>{'Authorization': 'Bearer $token'});
 
@@ -38,7 +42,7 @@ class TrainerServices {
         throw Exception('Failed to load trainers');
       }
     } catch (e) {
-      rethrow;
+      throw Exception;
     }
   }
 
@@ -124,6 +128,25 @@ class TrainerServices {
       }
     } catch (e) {
       rethrow;
+    }
+  }
+
+  Future<void> updateTrainer(TrainerModel trainer, String token) async {
+    try {
+      var url = Uri.parse(
+          'http://$urlLocal:8080/paddlehub/user-management/v1/trainers/${trainer.id}');
+      var response = await http.put(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer $token'
+          },
+          body: jsonEncode(trainer.toJson()));
+
+      if (response.statusCode == 200) {
+        return;
+      }
+    } catch (e) {
+      throw Exception('Failed to update trainer $e');
     }
   }
 }
